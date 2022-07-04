@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import HomePage from '../components/Content/HomePage'
-
+import { getRandomPosts } from '../state/actionsCreators/content';
+import {wrapper} from "../state/store" 
 function Home() {
   return (
     <div className="p-4">

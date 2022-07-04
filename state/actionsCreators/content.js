@@ -41,8 +41,8 @@ import {
   startGettingMyPostsNoThumbs,
   doneGettingMyPostsNoThumbs,
   failedGettingMyPostsNoThumbs,
-} from "../estateSlices/contentSlice";
-
+} from "../estateSices/contentSlice";
+ 
 export const getVideos = () => async (dispatch) => {
   dispatch(startGettingVideos());
   try {
