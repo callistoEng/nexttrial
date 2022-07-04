@@ -61,7 +61,7 @@ export const getNewAccessToken = async () => {
   const refreshToken = localStorage.getItem("refresh");
   const body = JSON.stringify({ refresh: refreshToken });
   const newAccessToken = await ApiFree().post(`/auth/jwt/refresh/`, body);
-//   gotNewRefresh(newAccessToken);
+  gotNewRefresh(newAccessToken);
   return newAccessToken;
 };
 

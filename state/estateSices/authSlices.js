@@ -375,6 +375,7 @@ export const {
   loadUserSuccess,
   loadUserFail,
   failedGettingOverview,
+  failedEditingTodo,
   failedGettingAllUsers,
   failedGettingMyListingsAnalytics,
   failedGettingMyListingsData,

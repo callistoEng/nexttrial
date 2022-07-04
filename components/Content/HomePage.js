@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import { Pagination, Autoplay, Navigation, EffectCreative } from "swiper";
-import { getLatestPosts } from "../../../frontnext/state/actionCreators/content";
+import { getLatestPosts } from "../../state/actionsCreators/content";
 
 const HomePage = () => {
   const latestUpdate = useSelector((state) => state.contents.latestUpdate);
