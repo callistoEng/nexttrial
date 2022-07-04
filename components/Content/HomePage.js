@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import { Pagination, Autoplay, Navigation, EffectCreative } from "swiper";
+import { getLatestPosts } from "../../../frontnext/state/actionCreators/content";
 
 const HomePage = () => {
-  const [randomPosts, setRandomPosts] = useState(null);
-  const [latestPosts, setLatestPosts] = useState(null);
-  const [featuredPosts, setFeaturedPosts] = useState(null);
+  const latestUpdate = useSelector((state) => state.contents.latestUpdate);
+  const randomPosts = useSelector((state) => state.contents.randomPosts);
+  const popularPosts = useSelector((state) => state.contents.popularPosts);
+  const featuredPosts = useSelector((state) => state.contents.featuredPosts);
+  const dispatch = useDispatch()
+  // const [randomPosts, setRandomPosts] = useState(null);
+  // const [latestPosts, setLatestPosts] = useState(null);
+  // const [featuredPosts, setFeaturedPosts] = useState(null);
   useEffect(async () => {
+    dispatch(getLatestPosts())
     //https://estatecloud.co.ke/api/v2/contents/sampled-news/
-    const random = await fetch(
-      "https://estatecloud.co.ke/api/v2/contents/sampled-news/"
-    ).then((random) => random.json());
-    const latest = await fetch(
-      "https://estatecloud.co.ke/api/v2/contents/latest/"
-    ).then((latest) => latest.json());
-    const featured = await fetch(
-      "https://estatecloud.co.ke/api/v2/contents/featured/"
-    ).then((featured) => featured.json());
+    // const random = await fetch(
+    //   "https://estatecloud.co.ke/api/v2/contents/sampled-news/"
+    // ).then((random) => random.json());
+    // const latest = await fetch(
+    //   "https://estatecloud.co.ke/api/v2/contents/latest/"
+    // ).then((latest) => latest.json());
+    // const featured = await fetch(
+    //   "https://estatecloud.co.ke/api/v2/contents/featured/"
+    // ).then((featured) => featured.json());
 
-    // update the state
-    setRandomPosts(random.results);
-    setLatestPosts(latest.results);
-    setFeaturedPosts(featured.results);
-  }, []);
+    // // update the state
+    // setRandomPosts(random.results);
+    // setLatestPosts(latest.results);
+    // setFeaturedPosts(featured.results);
+  }, [dispatch]);
   const truncateWords = (str, length, ending) => {
     if (length == null) {
       length = 100;
@@ -94,9 +101,7 @@ const HomePage = () => {
       },
     },
   };
-  console.log("called");
-  console.log("called random", randomPosts);
-  console.log("called latest ", latestPosts);
+
   return (
     <>
       <section className="my-3">
@@ -175,7 +180,7 @@ const HomePage = () => {
           </h4>
         </div>
         <div className="grid grid-cols-3 gap-3">
-          {latestPosts?.flatMap((item, index) => (
+          {latestUpdate?.flatMap((item, index) => (
             <div key={index} className=" w-full">
               <Link href={`/news/more/${item.slug}`}>
                 <a>
