@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito&family=Roboto:wght@300;400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    -ms-overflow-style: none;
+    scroll-width: none;
+  }
+  .thumb,
+  .thumb::-webkit-slider-thumb {
+    /* -webkit-apppearance: none;
+    -webkit-tap-highlight-color: transparent; */
+  }
+  .thumb {
+    pointer-events: none;
+    position: absolute;
+    height: 0;
+    width: 95%;
+    margin:auto;
+    outline: none;
+  }
+  .thumb--zindex-3 {
+    z-index: 3;
+  }
+
+  .thumb--zindex-4 {
+    z-index: 4;
+  }
+  /* For Chrome browsers */
+  .thumb::-webkit-slider-thumb {
+    background-color: pink;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 4px #0467C7;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+  }
+
+  /* For Firefox browsers */
+  .thumb::-moz-range-thumb {
+    background-color: red;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 4px #0467C7;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+  }
+  .myScrollBar::-webkit-scrollbar{
+    width: 7px;
+    height: 20px;
+  }
+  .myScrollBar{
+    scrollbar-width: 7px;
+    scrollbar-color: #71dee0;
+  }
+  .myScrollBar::-webkit-scrollbar-track{
+    border-radius: 100vh;
+    background: none;
+  }
+  .myScrollBar::-webkit-scrollbar-thumb{
+    background: #e0cbcb;
+    border-radius: 100vh;
+    border: 2px solid #f6f7ed;
+  }
+  .myScrollBar::-webkit-scrollbar-thumb:hover{
+    background: #c0a0b9;
+  }
+
+  .myScrollBarDash::-webkit-scrollbar{
+    width: 5px;
+    height: 20px;
+  }
+  .myScrollBarDash{
+    scrollbar-width: 5px;
+    scrollbar-color: #150b6f;
+  }
+  .myScrollBarDash::-webkit-scrollbar-track{
+    border-radius: 100vh;
+    display:none;
+    background: none;
+  }
+  .myScrollBarDash::-webkit-scrollbar-thumb{
+    background: #7770c9;
+    border-radius: 100vh;
+    border: 1px dotted #534e88;
+    
+  }
+  .myScrollBarDash::-webkit-scrollbar-thumb:hover{
+    background: #c0a0b9;
+  }
+}
+canvas {
+  background-color: #C6F6E3;
+}
+.post_cont p{
+  margin-bottom: 16px;
+}
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.ck-editor{
+  height: 400px;
+}
+.ck-content{
+  height: 400px; 
+  letter-spacing: 0.7px;
+  font-size: 16px;
+  word-spacing: 0.12rem;
+}
+.react-date-picker__calendar--open{
+  z-index: 50 !important;
+}
+input:checked + div {
+  @apply border-cloud-theme-blue;
+}
+input:checked + div svg {
+  @apply block;
+}
+.leaflet-popup-content {
+  margin: 2px !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 0;
+  right: 8px !important;
+  padding: 4px 4px 0 0;
+  border: none;
+  text-align: center;
+  width: 20px !important;
+  height: 18px !important;
+  font-size: 24px !important;
+  color: #c3c3c3;
+  text-decoration: none;
+  font-weight: bold;
+}
+.leaflet-popup-content p {
+  margin:0 !important;
+}
+
+html, body{
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+}
+::-webkit-scrollbar{
+  width: 15px;
+}
+::-webkit-scrollbar-track{
+  background: #d7e6f5;
+}
+::-webkit-scrollbar-thumb{
+  background: #0467C7;
+  border-radius: 100vh;
+}
