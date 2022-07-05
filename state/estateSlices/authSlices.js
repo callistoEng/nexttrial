@@ -68,9 +68,6 @@ export const authSlice = createSlice({
       state.gettingTodos = false;
       state.todos = [];
     },
-    failedEditingTodo: (state) => {
-      state.addingTodo = false;
-    },
     startAddingTodo: (state) => {
       state.addingTodo = true;
     },
@@ -78,6 +75,9 @@ export const authSlice = createSlice({
       state.addingTodo = false;
     },
     doneEditingTodo: (state) => {
+      state.addingTodo = false;
+    },
+    failedEditingTodo: (state) => {
       state.addingTodo = false;
     },
     doneGettingAll: (state, { payload }) => {
@@ -91,6 +91,11 @@ export const authSlice = createSlice({
     failedAddingTodo: (state) => {
       state.addingTodo = false;
       state.todos = [];
+    },
+    gotNewRefresh: (state, { payload }) => {
+      if (typeof window !== "undefined") {
+      state.access = payload.data.access;
+      }
     },
     startSigningInSucess: (state, { payload }) => {
       if (typeof window !== "undefined") {
@@ -296,9 +301,6 @@ export const authSlice = createSlice({
       state.isActivated = false;
       state.error = null;
     },
-    gotNewRefresh: (state, { payload }) => {
-      state.access = payload.data.access;
-    },
     resetPassSucess: (state) => {
       state.isAuthenticated = false;
       state.isActivated = false;
@@ -343,6 +345,7 @@ export const {
   startRegisteringSucess,
   startRequestingProp,
   startActivating,
+  failedEditingTodo,
   submitingPreferenceSuccess,
   subscriptionSuccess,
   startRegisteringFail,
@@ -375,7 +378,6 @@ export const {
   loadUserSuccess,
   loadUserFail,
   failedGettingOverview,
-  failedEditingTodo,
   failedGettingAllUsers,
   failedGettingMyListingsAnalytics,
   failedGettingMyListingsData,

@@ -42,7 +42,7 @@ import {
   doneGettingMyPostsNoThumbs,
   failedGettingMyPostsNoThumbs,
 } from "../estateSlices/contentSlice";
- 
+
 export const getVideos = () => async (dispatch) => {
   dispatch(startGettingVideos());
   try {
@@ -130,6 +130,54 @@ export const getRandomPosts = () => async (dispatch) => {
     dispatch(doneGettingRandomPosts(res.data));
   } catch (error) {
     dispatch(failedGettingRandomPosts());
+  }
+};
+export const getMyPostsNextNoThumbPrevPage = (myPostNext) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `JWT ${localStorage.getItem("access")}`,
+    },
+  };
+  dispatch(startGettingMyPostsNoThumbs());
+  try {
+    const res = await axios.get(
+      myPostNext,
+      config
+    );
+    dispatch(doneGettingMyPostsNoThumbs(res.data));
+  } catch (error) {
+    dispatch(failedGettingMyPostsNoThumbs());
+  }
+};
+export const scheduleViewing = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `JWT ${localStorage.getItem("access")}`,
+    },
+  };
+  dispatch(startReportingListing());
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_DJANGO_SEMIBASE_URL}/api/v2/listings/scheduled/`,
+      formData,
+      config
+    );
+    dispatch(doneReportingListing(res.data));
+    toast.success(res.data.message);
+  } catch (error) {
+    dispatch(failedReportingListing());
+    toast.error("Error. UnAuthenticated user!");
+  }
+};
+export const getAllPostsNextPrevPage = (postNextPrev) => async (dispatch) => {
+  dispatch(startContentList());
+  try {
+    const res = await ApiFree().get(
+      postNextPrev
+    );
+    dispatch(doneContentList(res.data));
+  } catch (error) {
+    dispatch(failedContentList());
   }
 };
 export const getLatestPosts = () => async (dispatch) => {

@@ -55,7 +55,7 @@ import {
   gotNewRefresh,
   doneGettingAll,
   failedGettingAllUsers,
-} from "../estateSlices/authSlices"; 
+} from "../estateSlices/authSlices";
 
 export const getNewAccessToken = async () => {
   const refreshToken = localStorage.getItem("refresh");

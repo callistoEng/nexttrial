@@ -15,7 +15,7 @@ const initialState = {
   likedCommercialListings: [],
   loadingLiked: false,
   next: null,
-  prev: null,   
+  prev: null,
   relatedListings: [],
   scheduleViewings: [],
   listingDetail: null,
