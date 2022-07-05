@@ -113,7 +113,7 @@ const HomePage = () => {
         <div className="grid gap-3 grid-cols-3">
           {randomPosts?.flatMap((item, index) => (
             <div key={index} className="w-full">
-              <Link href={`/news/more/${item.slug}`}>
+              <Link href={`/more/${item.slug}`}>
                 <a>
                   <div className="h-64 rounded-t-xl overflow-hidden relative">
                     <img
@@ -182,7 +182,7 @@ const HomePage = () => {
         <div className="grid grid-cols-3 gap-3">
           {latestUpdate?.flatMap((item, index) => (
             <div key={index} className=" w-full">
-              <Link href={`/news/more/${item.slug}`}>
+              <Link href={`/more/${item.slug}`}>
                 <a>
                   <div className="h-64 rounded-t-xl overflow-hidden relative">
                     <img
