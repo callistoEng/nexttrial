@@ -1,16 +1,15 @@
 import Head from "next/head";
-import { ContentHome } from "../components/Content";
 import Layout from "../components/Layout/Layout";
+import { ListingHome } from "../components/Listings";
 import {
   getCommercialHomeListings,
   getCowokingHomeListings,
   getLandHomeListings,
   getResidentialHomeListings,
 } from "../state/actionCreators/listings";
-import { getRandomPosts } from "../state/actionCreators/content"; 
 import { wrapper } from "../state/store";
 
-function Home() {
+export default function Home() {
   return (
     <section className="p-0 m-0 w-full">
       <Head>
@@ -23,30 +22,23 @@ function Home() {
 
       <main>
         <Layout>
-          <ContentHome />
+          <ListingHome />
         </Layout>
       </main>
-    </section>
+    </section> 
   );
 }
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  // await store.dispatch(getLatestPosts());
-  await store.dispatch(getRandomPosts());
-  return {
-    props: {},
-    revalidate: 3600, //time in seconds, tells the page to regenerate at every given second and updates the data even after the build time without deploying it again.
-  };
-});
-export default Home;
-// export const getStaticProps = wrapper.getStaticProps(
-//   (store) =>
-//     async () => {
-//       await store.dispatch(getResidentialHomeListings());
-//       await store.dispatch(getLandHomeListings());
-//       await store.dispatch(getCommercialHomeListings());
-//       await store.dispatch(getCowokingHomeListings());
-//       return {
-//         props: {},
-//       };
-//     }
-// );
+export const getStaticProps = wrapper.getStaticProps(
+  (store) =>
+    async () => {
+      await store.dispatch(getResidentialHomeListings());
+      await store.dispatch(getLandHomeListings());
+      await store.dispatch(getCommercialHomeListings());
+      await store.dispatch(getCowokingHomeListings());
+      return {
+        props: {},
+      };
+    }
+);
+
+  

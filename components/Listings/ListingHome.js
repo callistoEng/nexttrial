@@ -4,19 +4,9 @@ import { GoFlame, GoRequestChanges } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 import { Fragment, useState } from "react";
-import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
-// import {
-//   FacebookIcon,
-//   FacebookShareButton,
-//   TelegramIcon,
-//   TelegramShareButton,
-//   TwitterIcon,
-//   TwitterShareButton,
-//   WhatsappIcon,
-//   WhatsappShareButton,
-// } from "react-share";
+// import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
+// import 'react-phone-number-input/style.css'
+// import PhoneInput from 'react-phone-number-input'
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineScreenSearchDesktop } from "react-icons/md";
 import { TiNews } from "react-icons/ti";
@@ -42,9 +32,9 @@ import { Interact } from "./Interact";
 
 const ListingHome = () => {
   const [openRequestModal, setOpenRequestModal] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const router = useRouter();
-  const residentialHomeListings = useSelector(
+  const residentialHomeListings = useSelector(  
     (state) => state.listings.residentialHomeListings
   );
 
@@ -434,6 +424,7 @@ const ListingHome = () => {
         homeListing={coWorkingHomeListings}
         winCardWidth={winCardWidth}
       />
+      
       {/* <section className="px-5 mb-3">
         <div className="px-0 flex items-center justify-between w-full">
           <h3 className="font-bold text-xl text-cloud-theme-blue mb-2">
@@ -661,14 +652,14 @@ const RequestProperty = ({
       return;
     }
     setPhoneErr("");
-    if (isValidPhoneNumber(phone)) {
-      const phoneParse = parsePhoneNumber(phone);
-      var mobile_phone = phone;
-      var country = phoneParse.country;
-    } else {
-      setPhoneErr("Invalid phone number");
-      return;
-    }
+    // if (isValidPhoneNumber(phone)) {
+    //   const phoneParse = parsePhoneNumber(phone);
+    //   var mobile_phone = phone;
+    //   var country = phoneParse.country;
+    // } else {
+    //   setPhoneErr("Invalid phone number");
+    //   return;
+    // }
     setPhoneErr("");
     setEmailErr("");
     if (!requestDetails) {
@@ -767,7 +758,7 @@ const RequestProperty = ({
                         </p>
                       )}
                     </div>
-                    <PhoneInput
+                    {/* <PhoneInput
                       value={phone}
                       onChange={setPhone}
                       placeholder="Phone number eg:+25471234.."
@@ -787,7 +778,7 @@ const RequestProperty = ({
                       international
                       defaultCountry="KE"
                       maxLength="16"
-                    />
+                    /> */}
                   </div>
                   <div className="relative z-0 mb-3 w-full group">
                     <input

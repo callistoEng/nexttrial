@@ -164,7 +164,7 @@ const ContentHome = () => {
                 pagination={{ clickable: true }}
                 modules={[Pagination, Autoplay, EffectCreative]}
               >
-                {randomPosts.flatMap((item) => (
+                {randomPosts.flatMap((item, index) => (
                   <SwiperSlide className="w-full h-full" key={item.id}>
                     <div className="w-full sm:h-[52vh] h-[35vh] rounded-md">
                       <Link href={`/news/more/${item.slug}`}>
