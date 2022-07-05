@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
   }, [dispatch]);
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <ToastContainer />
       <div className=" border-b border-b-white"></div>
       <section className="p-0 dark:bg-cloud-theme-dark font-nuno">
