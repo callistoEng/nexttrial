@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {createWrapper} from "next-redux-wrapper"
-import authReducer from "./estateSices/authSlices"; 
-import contentReducer from "./estateSices/contentSlice";
+import authReducer from "./estateSlices/authSlices"; 
+import contentReducer from "./estateSlices/contentSlice";
 
 export const makeStore = () =>
   configureStore({

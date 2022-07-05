@@ -3,23 +3,48 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from 'next/image'
 import parse from "html-react-parser";
-
+// import {
+//   FacebookIcon,
+//   FacebookShareButton,
+//   EmailIcon,
+//   EmailShareButton,
+//   MailruIcon,
+//   MailruShareButton,
+//   LinkedinIcon,
+//   LinkedinShareButton,
+//   TwitterIcon,
+//   TwitterShareButton,
+//   WhatsappIcon,
+//   WhatsappShareButton,
+//   TelegramShareButton,
+//   TelegramIcon,
+//   PinterestShareButton,
+//   PinterestIcon,
+//   TumblrShareButton,
+//   TumblrIcon,
+//   LivejournalShareButton,
+//   LivejournalIcon,
+//   RedditShareButton,
+//   RedditIcon,
+// } from "react-share";
 import {
+  getContentDetail,
   getFeaturedPosts,
   getPopularPosts,
-} from "../../state/actionsCreators/content";
+} from "../../state/actionCreators/content";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 // import { Helmet } from "react-helmet-async";
 import {
   failedGettingFeatured,
   failedGettingVideos,
   failedGettingPopular,
-} from "../../state/estateSices/contentSlice";
+} from "../../state/estateSlices/contentSlice";
 // import { Subscribe } from "../Subscribe";
 import { truncateWords } from "../../utils/Truncate";
 import Head from "next/head";
 // import { TrackpageView } from "../GAnalytics";
 
+// const ContentDetail = ({singleContents}) => {
 const ContentDetail = () => {
   const dispatch = useDispatch();
   const singleContent = useSelector((state) => state.contents.singleContent);
