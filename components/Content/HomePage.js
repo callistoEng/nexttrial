@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import hm from "../../public/hm.jpg" 
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import { Pagination, Autoplay, Navigation, EffectCreative } from "swiper";
 import { getLatestPosts } from "../../state/actionsCreators/content";
+import { FaSearch } from "react-icons/fa";
 
 const HomePage = () => {
   const latestUpdate = useSelector((state) => state.contents.latestUpdate);
   const randomPosts = useSelector((state) => state.contents.randomPosts);
-  const popularPosts = useSelector((state) => state.contents.popularPosts);
-  const featuredPosts = useSelector((state) => state.contents.featuredPosts);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const [randomPosts, setRandomPosts] = useState(null);
   // const [latestPosts, setLatestPosts] = useState(null);
   // const [featuredPosts, setFeaturedPosts] = useState(null);
-  useEffect(async () => {
-    dispatch(getLatestPosts())
+  useEffect(() => {
+    dispatch(getLatestPosts());
     //https://estatecloud.co.ke/api/v2/contents/sampled-news/
     // const random = await fetch(
     //   "https://estatecloud.co.ke/api/v2/contents/sampled-news/"
@@ -104,10 +105,48 @@ const HomePage = () => {
 
   return (
     <>
+      <section className="mb-5 md:mb-8 mt-[4.85rem] md:h-[85vh] sm:h-[60vh] h-[40vh] relative px-0">
+        <div className="w-full flex justify-center content-center items-center h-full">
+          <div
+            className="flex flex-col w-11/12 xs-l:w-4/5 sm:w-2/3 bg-opacity-30
+          sm:p-10 p-5 justify-center content-center items-center rounded-lg bg-cloud-theme-blue mx-auto shadow-lg"
+          >
+            <h2 className="font-bold md:text-5xl md:mb-10 sm:text-3xl text-2xl text-white opacity-100 text-left">
+              Explore Property With Us 
+            </h2>
+            <div className="xs-l:w-4/5 w-full">
+              <form
+                className="flex w-full sm:mt-8 mt-5 md:mt-16 shadow-lg opacity-100"
+              >
+                <input
+                  type="text"
+                  className="rounded-none rounded-l-lg  dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white  border border-1 
+                  dark:border-cloud-theme-blue outline-none border-gray-300 text-gray-900 focus:border-cloud-theme-blue block flex-1 w-full text-sm p-2.5"
+                  placeholder="e.g. location, area, project"
+                />
+                <button
+                  className="inline-flex items-center px-3 text-sm dark:bg-gray-700 text-gray-900 opacity-100 bg-gray-200 rounded-r-lg border
+                border-r-0 border-gray-300 dark:border-cloud-theme-blue  focus:border-cloud-theme-blue"
+                >
+                  <FaSearch />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-full absolute top-0 left-0 -z-10">
+          <Image
+            alt="estatecloud banner"
+            src={hm}
+            layout="fill"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </section>
       <section className="my-3">
         <div className="flex justify-between px-0 my-3 mt-7">
           <h4 className="text-xl font-semibold text-cloud-theme-blue">
-            Random 
+            Random
           </h4>
         </div>
         <div className="grid gap-3 grid-cols-3">
@@ -241,7 +280,6 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-
       </section>
     </>
   );
