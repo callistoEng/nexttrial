@@ -13,9 +13,9 @@ const Header = () => {
   const [menu2Open, setMenu2Open] = useState(false);
   const [openProfileFilter, setOpenProfileFilter] = useState(false);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(checkAuthenticated()) 
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(checkAuthenticated()) 
+  }, [dispatch]);
   useEffect(() => {
     // console.log('theme status: ',localStorage.cloudTheme)
     setDarkMode(document.documentElement.classList.contains("dark"));
@@ -35,10 +35,8 @@ const Header = () => {
     setDarkMode(!darkMode);
   };
 
-  const user = null;
-  const isAuthenticated = false;
-  // const user = useSelector((state) => state.auth.user);
-  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <>
       <header className="mb-0 py-0 px-3 z-1020 shadow-md dark:bg-cloud-theme-dark fixed bg-white w-full">
@@ -122,7 +120,130 @@ const Header = () => {
               </div>
             </div>
 
-            
+            {isAuthenticated ? (
+              <>
+                <li className="w-full bg-blue-100 rounded-md mb-2">
+                  <button
+                  type="button"
+                    className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
+                    hover:bg-cloud-theme-blue hover:text-white"
+                    onClick={() => {
+                      dispatch(logout());
+                      setMenu2Open(!menu2Open);
+                    }}
+                  >
+                    Log Out
+                  </button>
+                </li>
+                {user && user.is_agent && (
+                  <>
+                    <li className="w-full bg-blue-100 rounded-md mb-2">
+                      <Link href="/auth/agent/dashboard">
+                        <a
+                          className="
+                         px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold 
+                         dark:hover:text-white hover:bg-cloud-theme-blue hover:text-white
+                         "
+                          onClick={() => {
+                            setMenu2Open(!menu2Open);
+                            setOpenProfileFilter(!openProfileFilter);
+                          }}
+                        >
+                          Dashboard
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="w-full bg-blue-100 rounded-md mb-2">
+                      <Link href="/auth/agent/add-listings">
+                        <a
+                          className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white
+                        hover:bg-cloud-theme-blue hover:text-white"
+                          onClick={() => {
+                            setMenu2Open(!menu2Open);
+                            setOpenProfileFilter(!openProfileFilter);
+                          }}
+                        >
+                          Add Listings
+                        </a>
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {user && user.is_content_creator && (
+                  <>
+                    <li className="w-full bg-blue-100 rounded-md mb-2">
+                      <Link href="/auth/agent/my-posts">
+                        <a
+                          className="
+                        px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold 
+                        dark:hover:text-white hover:bg-cloud-theme-blue hover:text-white
+                        "
+                          onClick={() => {
+                            setMenu2Open(!menu2Open);
+                            setOpenProfileFilter(!openProfileFilter);
+                          }}
+                        >
+                          My Posts
+                        </a>
+                      </Link>
+                    </li>
+                    {/* <li className="w-full bg-blue-100 rounded-md mb-2">
+                      <Link
+                        href="/auth/agent/add-content"
+                        className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white hover:bg-cloud-theme-blue hover:text-white"
+                      >
+                       <a onClick={() => {
+                          setMenu2Open(!menu2Open);
+                          setOpenProfileFilter(!openProfileFilter);
+                        }}>Add Post</a> 
+                      </Link>
+                    </li> */}
+                  </>
+                )}
+
+                <li className="w-full bg-blue-100 rounded-md mb-2">
+                  <Link href="/auth/user/my-preferences">
+                    <a
+                      className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
+                    hover:bg-cloud-theme-blue hover:text-white"
+                      onClick={() => {
+                        setMenu2Open(!menu2Open);
+                        setOpenProfileFilter(!openProfileFilter);
+                      }}
+                    >
+                      My Profile
+                    </a>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="w-full bg-blue-100 rounded-md mb-2">
+                  <Link href="/auth/login">
+                    <a
+                      className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
+                    hover:bg-cloud-theme-blue hover:text-white"
+                      onClick={() => {
+                        setMenu2Open(!menu2Open);
+                      }}
+                    >
+                      Login
+                    </a>
+                  </Link>
+                </li>
+                <li className="w-full bg-blue-100 rounded-md mb-2">
+                  <Link href="/auth/signup">
+                    <a
+                      className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
+                    hover:bg-cloud-theme-blue hover:text-white"
+                      onClick={() => setMenu2Open(!menu2Open)}
+                    >
+                      Sign Up
+                    </a>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <nav className="flex py-5 justify-between items-center content-center dark:text-white">
@@ -162,7 +283,37 @@ const Header = () => {
                   </a>
                 </Link>
               </li>
-            
+              {isAuthenticated ? (
+                <>
+                  <li className="font-medium">
+                    <button
+                      className="px-2.5 py-2 w-full block font-semibold transition-all duration-300 hover:shadow-md hover:bg-gray-700 hover:text-white"
+                      onClick={() => setOpenProfileFilter(!openProfileFilter)}
+                      type="button"
+                    >
+                      My Account
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="font-medium">
+                    <Link href="/auth/login">
+                      <a className="px-2.5 py-2 w-full block transition-all duration-300 hover:shadow-md hover:bg-gray-700 hover:text-white">
+                        Login
+                      </a>
+                    </Link>
+                  </li>
+
+                  <li className="font-medium">
+                    <Link href="/auth/signup">
+                      <a className="px-2.5 py-2 w-full block transition-all duration-300 hover:shadow-md hover:bg-gray-700 hover:text-white">
+                        Signup
+                      </a>
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           <div
@@ -183,6 +334,91 @@ const Header = () => {
                   <h5 className="font-semibold text-lg">Close</h5>
                 </button>
               </div>
+
+              <li className="py-2 px-3 hover:bg-cloud-theme-blue hover:text-white transition-all duration-200 mb-2">
+                <button
+                  type="button"
+                  className="font-semibold w-full block text-left"
+                  onClick={() => {
+                    dispatch(logout());
+                    setOpenProfileFilter(!openProfileFilter);
+                  }}
+                >
+                  Log out
+                </button>
+              </li>
+              {user && user.is_agent && (
+                <>
+                  <li className="py-2 px-3 font-semibold hover:bg-cloud-theme-blue hover:text-white transition-all duration-200">
+                    <Link href="/auth/agent/dashboard">
+                      <a
+                        className=" w-full block"
+                        onClick={() => {
+                          setMenu2Open(!menu2Open);
+                          setOpenProfileFilter(!openProfileFilter);
+                        }}
+                      >
+                        Dashboard
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="py-2 px-3 font-semibold hover:bg-cloud-theme-blue hover:text-white transition-all duration-200">
+                    <Link href="/auth/agent/add-listings">
+                      <a
+                        className=" w-full block"
+                        onClick={() => {
+                          setMenu2Open(!menu2Open);
+                          setOpenProfileFilter(!openProfileFilter);
+                        }}
+                      >
+                        Add Listings
+                      </a>
+                    </Link>
+                  </li>
+                </>
+              )}
+              {user && user.is_content_creator && (
+                <>
+                  <li className="py-2 px-3 font-semibold hover:bg-cloud-theme-blue hover:text-white transition-all duration-200">
+                    <Link href="/auth/agent/my-posts">
+                      <a
+                        className=" w-full block"
+                        onClick={() => {
+                          setMenu2Open(!menu2Open);
+                          setOpenProfileFilter(!openProfileFilter);
+                        }}
+                      >
+                        My Posts
+                      </a>
+                    </Link>
+                  </li>
+                  {/* <li className="py-2 px-3 font-semibold hover:bg-cloud-theme-blue hover:text-white transition-all duration-200">
+                    <Link
+                      onClick={() => {
+                        setMenu2Open(!menu2Open);
+                        setOpenProfileFilter(!openProfileFilter);
+                      }}
+                      className=" w-full block"
+                      to="/auth/agent/add-content"
+                    >
+                      Add Post
+                    </Link>
+                  </li> */}
+                </>
+              )}
+              <li className="py-2 px-3 font-semibold hover:bg-cloud-theme-blue hover:text-white transition-all duration-200">
+                <Link href="/auth/user/my-preferences">
+                  <a
+                    className=" w-full block"
+                    onClick={() => {
+                      setOpenProfileFilter(!openProfileFilter);
+                      setOpenProfileFilter(!openProfileFilter);
+                    }}
+                  >
+                    My Profile
+                  </a>
+                </Link>
+              </li>
 
               {/* <li>
                 <Link
