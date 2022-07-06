@@ -63,7 +63,7 @@ export const authSlice = createSlice({
     doneGettingTodos: (state, { payload }) => {
       state.gettingTodos = false;
       state.todos = payload;
-    },
+    },  
     failedGettingTodoS: (state) => {
       state.gettingTodos = false;
       state.todos = [];

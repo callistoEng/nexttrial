@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const CheckMailBox = () => {
   return (
@@ -8,23 +8,30 @@ const CheckMailBox = () => {
         <div className="pre-conf">
           <h2 className="font-semibold mb-2">Check Your Mailbox</h2>
           <p className="">
-          User registered successfully. Check your email to activate your account
+            User registered successfully. Check your email to activate your
+            account
           </p>
           <p className="text-cloud-theme-blue">
             We have sent to you an email with a link to activate your account.
           </p>
         </div>
         <div className="mt-3">
-          <h4 className="font-medium mb-2 text-cloud-theme-gold underline">Didn't receive an email?</h4>
+          <h4 className="font-medium mb-2 text-cloud-theme-gold underline">
+            Didn't receive an email?
+          </h4>
           <p>If you did not receive an email from us:</p>
           <ul className="list-disc list-inside">
             <li className="mb-1 italic">Check your spam folder</li>
-            <li className="mb-1 italic">Check if the email provided had a typo</li>
-            <li className="mb-1 italic">Your firewall could be blocking our emails</li>
+            <li className="mb-1 italic">
+              Check if the email provided had a typo
+            </li>
+            <li className="mb-1 italic">
+              Your firewall could be blocking our emails
+            </li>
           </ul>
         </div>
-        <Link className="underline text-sm text-cloud-theme-gold" to="/auth/signup">
-          Try again
+        <Link href="/auth/signup">
+          <a className="underline text-sm text-cloud-theme-gold"> Try again</a>
         </Link>
       </div>
     </div>

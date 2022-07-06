@@ -50,13 +50,13 @@ const UserSignup = () => {
   );
   useEffect(() => {
     window.scrollTo(0, 0);
-    TrackpageView("/auth/signup");
+    // TrackpageView("/auth/signup");
   }, []);
   const onSubmit = (e) => {
     e.preventDefault();
     if (!user_name) {
       setUsernameErr("This field is required");
-      return;
+      return; 
     }
     if (!email) {
       setEmailErr("This field is required");
