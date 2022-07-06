@@ -9,7 +9,7 @@ import { register } from "../../state/actionCreators/auth";
 import {
   FaArrowLeft,
   FaAngleDown,
-  FaAngleUp, 
+  FaAngleUp,
   FaEyeSlash,
   FaEye,
 } from "react-icons/fa";
@@ -21,6 +21,7 @@ const UserSignup = () => {
   const [user_name, setuser_name] = useState("");
   const [password, setPassword] = useState("");
   const [re_password, setRePassword] = useState("");
+  const [about_me, setAboutMe] = useState("");
   const [agency_name, setAgencyName] = useState("");
   const [location, setLocation] = useState("");
   const [locality, setLocality] = useState("");
@@ -44,10 +45,12 @@ const UserSignup = () => {
   const signupHeight = useRef();
   const registering = useSelector((state) => state.auth.registering);
   const messages = useSelector((state) => state.auth.messages);
-  const registeringSuccess = useSelector((state) => state.auth.registeringSuccess);
+  const registeringSuccess = useSelector(
+    (state) => state.auth.registeringSuccess
+  );
   useEffect(() => {
     window.scrollTo(0, 0);
-    // TrackpageView("/auth/signup")
+    TrackpageView("/auth/signup");
   }, []);
   const onSubmit = (e) => {
     e.preventDefault();
@@ -98,6 +101,7 @@ const UserSignup = () => {
               location,
               locality,
               user_name,
+              about_me,
               content_creator_name,
               agency_name,
               country,
@@ -132,6 +136,7 @@ const UserSignup = () => {
           location,
           locality,
           user_name,
+          about_me,
           content_creator_name,
           agency_name,
           country,
@@ -153,17 +158,16 @@ const UserSignup = () => {
       !openSignup ? `${signupHeight.current.scrollHeight}px` : "0px"
     );
   };
-  // if (registeringSuccess) {
-  //   return <Navigate to="/auth/check-mail" />;
-  // }
+  if (registeringSuccess) {
+    return <Navigate to="/auth/check-mail" />;
+  }
   return (
     <section className="xs-l:p-8 p-4 xs-l:w-[27rem] w-full mx-auto">
       <div className="mt-[4.8rem]">
-        <Link
-          href="/"
-          
-        >
-         <a className="text-lg flex justify-start content-center items-center"><FaArrowLeft className="text-base mr-4" /> back to homepage</a> 
+        <Link href="/">
+          <a className="text-lg flex justify-start content-center items-center">
+            <FaArrowLeft className="text-base mr-4" /> back to homepage
+          </a>
         </Link>
         <p className="text-center font-bold md:text-xl text-lg md:mt-5 mt-3">
           Join the leading real estate platform
@@ -179,17 +183,17 @@ const UserSignup = () => {
           href="/auth/signup"
           className="font-bold mb:border-b-4 border-b-2 text-sm rounded-lg  border-cloud-theme-blue text-gray-400 md:text-base"
         >
-         <a>SIGN UP</a> 
+          <a>SIGN UP</a>
         </Link>
         <Link href="/auth/login" className="font-bold text-sm md:text-base">
-        <a>LOGIN</a> 
+          <a>LOGIN</a>
         </Link>
       </div>
-      {messages &&(
-        <div className="mt-3" >
-        <p className="text-red-600 text-sm">{messages}</p>
-      </div>
-      )}    
+      {messages && (
+        <div className="mt-3">
+          <p className="text-red-600 text-sm">{messages}</p>
+        </div>
+      )}
       <form className="md:mt-9 mt-5" onSubmit={onSubmit}>
         <div className="mb-5">
           <div className="mb-1.5">
@@ -440,6 +444,28 @@ const UserSignup = () => {
         )}
         {is_agent ? (
           <>
+          <div className="relative z-0 mb-6 w-full">
+              <p className="">About Me</p>
+              <textarea
+                type="text"
+                value={about_me}
+                onChange={(e) => setAboutMe(e.target.value)}
+                maxLength={200}
+                rows="4"
+                className="
+              w-full
+              text-gray-900
+              md:px-3
+              px-2
+              py-2
+              ring-1
+              outline-none
+              border-none
+              ring-red-300
+              "
+                placeholder="A brief description of your agency or you"
+              />
+            </div>
             <div className="mb-5">
               <div className="flex justify-between mb-1.5">
                 <p className="font-semibold  text-sm text-blue-600">
@@ -638,7 +664,7 @@ const UserSignup = () => {
           </div>
         </div>
         <Link href="/auth/login">
-        <a className="text-blue-600 underline">Already signed up? Login</a>
+          <a className="text-blue-600 underline">Already signed up? Login</a>
         </Link>
 
         {registering ? (

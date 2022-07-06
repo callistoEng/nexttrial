@@ -49,7 +49,7 @@ import {
   startGettingTodos,
   doneGettingTodos,
   failedGettingTodoS,
-  startGettingTodoGroups, 
+  startGettingTodoGroups,
   doneGettingTodosGroups,
   failedGettingTodoGroups,
   gotNewRefresh,
@@ -131,22 +131,26 @@ export const getAllRegularUsers = () => async (dispatch) => {
 };
 
 export const login = (email, password) => async (dispatch) => {
-  const config ={
+  const config = {
     headers: {
       "Content-Type": "application/json",
     },
-  }
+  };
   const body = JSON.stringify({ email, password });
   dispatch(startSigningIn());
   try {
-    // const res = await ApiFree().post("/auth/jwt/create/", body); 
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/create/`, body,config);
+    // const res = await ApiFree().post("/auth/jwt/create/", body);
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/create/`,
+      body,
+      config
+    );
     dispatch(startSigningInSucess(res.data));
     dispatch(loadUsers());
-    console.log('in suc')
+    console.log("in suc");
   } catch (err) {
     dispatch(startSigningInFail());
-    console.log('in fail ')
+    console.log("in fail ");
   }
 };
 
@@ -352,8 +356,7 @@ export const addUserPreferences =
     }
   };
 export const getUserPreferences = () => async (dispatch) => {
-  if(typeof window !== "undefined"){
-
+  if (typeof window !== "undefined") {
     const conf = {
       headers: {
         Authorization: `JWT ${localStorage.getItem("access")}`,
@@ -391,11 +394,11 @@ export const register =
     re_password
   ) =>
   async (dispatch) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
     const body = JSON.stringify({
       location,
@@ -416,10 +419,9 @@ export const register =
     });
     dispatch(startRegistering());
     try {
-      await axios.post(
+      const res = await ApiFree().post(
         `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/users/`,
-        body,
-        config
+        body
       );
       dispatch(startRegisteringSucess());
     } catch (err) {

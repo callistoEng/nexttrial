@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getNewAccessToken } from "../state/actionCreators/auth"; 
+import { getNewAccessToken } from "../state/actionCreators/auth";
 // import { getNewAccessToken } from "../state/actionCreators/auth";
 // import { production_url } from "./conf";
 
@@ -20,13 +20,14 @@ export const ECAuthApiRoot = () => {
     }
     return request;
   });
-  return authApiInstance; 
+  return authApiInstance;
 };
 export const ApiFree = () => {
   const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL,
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
   });
   return axiosInstance;
