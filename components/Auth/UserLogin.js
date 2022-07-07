@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";   
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { login } from "../../state/actionCreators/auth";
+import { loadUsers, login } from "../../state/actionCreators/auth";
 import { SpinOne } from "../../components/Spinners/Spinner";
 // import { TrackpageView } from "../GAnalytics";
 import { FaArrowLeft, FaEyeSlash, FaEye } from "react-icons/fa";
@@ -21,16 +21,26 @@ const UserLogin = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     emailFocus.current.focus();
+    dispatch(loadUsers());
     // if (isAuthenticated) {
     //   router.push("/");
     // }
     // TrackpageView("/auth/login")
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
+  // useEffect(async () => {
+  // await fetch("/api/auth/loaduser", {
+  //   method: "GET",
+  //   headers:{
+  //     "Accept":"application/json"
+  //   }
+  // });
+
+  // },[]);
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
-  if (typeof window !=="undefined" && isAuthenticated) {
+  if (typeof window !== "undefined" && isAuthenticated) {
     router.push("/");
   }
   return (

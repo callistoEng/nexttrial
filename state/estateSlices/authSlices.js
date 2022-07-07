@@ -98,10 +98,6 @@ export const authSlice = createSlice({
       }
     },
     startSigningInSucess: (state, { payload }) => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem("access", payload.access);
-        localStorage.setItem("refresh", payload.refresh);
-      }
 
       state.isAuthenticated = true;
       state.access = payload.access;
@@ -110,10 +106,6 @@ export const authSlice = createSlice({
       state.loginerror = false;
     },
     startSigningInFail: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-      }
-
       state.isAuthenticated = false;
       state.access = null;
       state.refresh = null;
@@ -316,6 +308,7 @@ export const authSlice = createSlice({
     },
     loadUserFail: (state) => {
       state.error = true;
+      state.user = null;
     },
 
     doneCheckAuthenticated: (state, action) => {

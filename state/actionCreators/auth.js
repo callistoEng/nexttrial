@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import cookie from "cookie"
+import cookie from "cookie";
 import { ECAuthApiRoot, ApiFree } from "../../utils/apiCall";
 import {
   activatingSucess,
@@ -94,20 +94,20 @@ export const checkAuthenticated = () => async (dispatch) => {
 };
 
 export const loadUsers = () => async (dispatch) => {
-  if (localStorage.getItem("access")) {
-    const config = {
+  try {
+    const res = await fetch("/api/auth/loaduser", {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem("access")}`,
         Accept: "application/json",
       },
-    };
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/users/me/`,
-      config
-    );
-    dispatch(loadUserSuccess(res.data));
-  } else {
+    });
+    const user = await res.json();
+    if (res.status === 200) {
+      dispatch(loadUserSuccess(user.user));
+    } else {
+      dispatch(loadUserFail());
+    }
+  } catch (err) {
     dispatch(loadUserFail());
   }
 };
@@ -132,26 +132,29 @@ export const getAllRegularUsers = () => async (dispatch) => {
 };
 
 export const login = (email, password) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
   const body = JSON.stringify({ email, password });
   dispatch(startSigningIn());
   try {
-    const res = await ApiFree().post("/auth/jwt/create/", body);
-    // const res = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/create/`,
-    //   body,
-    //   config
-    // );
-    dispatch(startSigningInSucess(res.data));
-    dispatch(loadUsers());
+    // const res = await ApiFree().post("/auth/jwt/create/", body);
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    const resJson = await res.json()  
+    console.log("res next auth", res);
+    console.log("res json", resJson.data);
+    if(res.status===200){
+      dispatch(startSigningInSucess(resJson.data));
+      dispatch(loadUsers());
+    }
     console.log("in suc");
   } catch (err) {
     dispatch(startSigningInFail());
-    console.log("in fail ");
+    console.log("in fail ", err);
   }
 };
 
@@ -653,7 +656,19 @@ export const reset_phone = (mobile_phone) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  dispatch(logOut());
+  try {
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    if (res.status === 200) {
+      dispatch(logOut());
+    } else {
+      console.log("Unable to logout");
+    }
+  } catch (error) {}
 };
 export const userSubscribe = (email) => async (dispatch) => {
   if (localStorage.getItem("access")) {

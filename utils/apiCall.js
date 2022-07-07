@@ -32,3 +32,24 @@ export const ApiFree = () => {
   });
   return axiosInstance;
 };
+
+
+
+export const LoginApiRoot = () => {
+  let accessToken = localStorage.getItem("access");
+  const authApiInstance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+  authApiInstance.interceptors.response.use(async (response) => {
+    if (!accessToken) {
+      accessToken = await getNewAccessToken();
+      response.headers.Authorization = `JWT ${accessToken}`;
+    }
+    return response;
+  });
+  return authApiInstance;
+};

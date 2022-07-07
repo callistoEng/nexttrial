@@ -1,11 +1,11 @@
-import UserLogin from "../../components/Auth/UserLogin"
+import UserLogin from "../../components/Auth/UserLogin";
 
 const login = () => {
   return (
     <>
-    <UserLogin/>
+      <UserLogin />
     </>
-  )
-}
+  );
+};
 
-export default login
+export default login;
