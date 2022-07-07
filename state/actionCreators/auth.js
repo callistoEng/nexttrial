@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import cookie from "cookie"
 import { ECAuthApiRoot, ApiFree } from "../../utils/apiCall";
 import {
   activatingSucess,
@@ -139,12 +140,12 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
   dispatch(startSigningIn());
   try {
-    // const res = await ApiFree().post("/auth/jwt/create/", body);
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/create/`,
-      body,
-      config
-    );
+    const res = await ApiFree().post("/auth/jwt/create/", body);
+    // const res = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/create/`,
+    //   body,
+    //   config
+    // );
     dispatch(startSigningInSucess(res.data));
     dispatch(loadUsers());
     console.log("in suc");

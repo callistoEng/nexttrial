@@ -14,6 +14,7 @@ import {
   FaEye,
 } from "react-icons/fa";
 import { SpinOne } from "../../components/Spinners/Spinner";
+import { useRouter } from "next/router";
 const UserSignup = () => {
   const [email, setEmail] = useState("");
   const [seePass, setSeePass] = useState(false);
@@ -42,6 +43,7 @@ const UserSignup = () => {
   const [user_nameErr, setUsernameErr] = useState("");
   const [passErr, setPassErr] = useState("");
   const dispatch = useDispatch();
+  const router = useRouter()
   const signupHeight = useRef();
   const registering = useSelector((state) => state.auth.registering);
   const messages = useSelector((state) => state.auth.messages);
@@ -158,8 +160,8 @@ const UserSignup = () => {
       !openSignup ? `${signupHeight.current.scrollHeight}px` : "0px"
     );
   };
-  if (registeringSuccess) {
-    return <Navigate to="/auth/check-mail" />;
+  if (typeof window !== "undefined" && registeringSuccess) {
+    router.push("/auth/check-mail");
   }
   return (
     <section className="xs-l:p-8 p-4 xs-l:w-[27rem] w-full mx-auto">

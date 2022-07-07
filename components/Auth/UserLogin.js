@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";   
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -21,16 +21,18 @@ const UserLogin = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     emailFocus.current.focus();
-    if (isAuthenticated) {
-      router.push("/");
-    }
+    // if (isAuthenticated) {
+    //   router.push("/");
+    // }
     // TrackpageView("/auth/login")
   }, [isAuthenticated]);
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
-
+  if (typeof window !=="undefined" && isAuthenticated) {
+    router.push("/");
+  }
   return (
     <section className="xs-l:p-8 p-4 xs-l:w-[25rem] w-full mx-auto">
       <div className="mt-[4.8rem]">
