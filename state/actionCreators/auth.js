@@ -58,13 +58,13 @@ import {
   failedGettingAllUsers,
 } from "../estateSlices/authSlices";
 
-// export const getNewAccessToken = async () => {
-//   const refreshToken = localStorage.getItem("refresh");
-//   const body = JSON.stringify({ refresh: refreshToken });
-//   const newAccessToken = await ApiFree().post(`/auth/jwt/refresh/`, body);
-//   gotNewRefresh(newAccessToken);
-//   return newAccessToken;
-// };
+export const getNewAccessToken = async () => {
+  const refreshToken = localStorage.getItem("refresh");
+  const body = JSON.stringify({ refresh: refreshToken });
+  const newAccessToken = await ApiFree().post(`/auth/jwt/refresh/`, body);
+  gotNewRefresh(newAccessToken);
+  return newAccessToken;
+};
 
 export const checkAuthenticated = () => async (dispatch) => {
   try {
