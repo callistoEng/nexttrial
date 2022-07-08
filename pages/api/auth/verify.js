@@ -5,21 +5,15 @@ export default async (req, res) => {
   if (req.method === "GET") {
     const cookies = cookie.parse(req.headers.cookie ?? "");
     const access = cookies.access ?? null;
-    const refresh = cookies.refresh ?? null;
-    const config = {
-      headers: {
-        Authorization: `JWT ${access}`,
-      },
-    };
+    const body = JSON.stringify({ token: access });
+
     if (access) {
       try {
-        const user = await ApiFree().get(
-          `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/users/me/`,
-          config
-        );
-        if (user.status === 200) {
+        const verified = await ApiFree().post(`/auth/jwt/verify/`, body);
+        if (verified.status === 200) {
           return res.status(200).json({
-            user: user.data,
+            statusText: verified.statusText,
+            success: "verified user",
           });
         } else {
           return res.status(404).json({
@@ -32,8 +26,6 @@ export default async (req, res) => {
           statusText: error.response.statusText,
         });
       }
-    }
-    if (refresh) {
     } else {
       return res.status(401).json({
         success: "Unknown",

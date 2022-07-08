@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { loadUsers,checkAuthenticated } from "../../state/actionCreators/auth";
 import { logout } from "../../state/actionCreators/auth";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrClose } from "react-icons/gr";
@@ -12,10 +11,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menu2Open, setMenu2Open] = useState(false);
   const [openProfileFilter, setOpenProfileFilter] = useState(false);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(checkAuthenticated()) 
-  }, [dispatch]);
+  const dispatch = useDispatch(); 
   useEffect(() => {
     // console.log('theme status: ',localStorage.cloudTheme)
     setDarkMode(document.documentElement.classList.contains("dark"));

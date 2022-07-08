@@ -97,18 +97,13 @@ export const authSlice = createSlice({
       state.access = payload.data.access;
       }
     },
-    startSigningInSucess: (state, { payload }) => {
-
+    startSigningInSucess: (state) => {
       state.isAuthenticated = true;
-      state.access = payload.access;
-      state.refresh = payload.refresh;
       state.logingIn = false;
       state.loginerror = false;
     },
     startSigningInFail: (state) => {
       state.isAuthenticated = false;
-      state.access = null;
-      state.refresh = null;
       state.logingIn = false;
       state.loginerror = true;
     },
@@ -116,24 +111,11 @@ export const authSlice = createSlice({
       state.deleting = true;
     },
     doneDeletingSucess: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-      }
-
       state.isAuthenticated = false;
-      state.access = null;
-      state.refresh = null;
       state.deleting = false;
     },
     failedDeleting: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-      }
-
       state.isAuthenticated = false;
-      state.access = null;
-      state.refresh = null;
       state.deleting = false;
     },
 
@@ -176,13 +158,6 @@ export const authSlice = createSlice({
       state.subscriptionMessages = "";
     },
     authenticatingFail: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-      }
-
-      state.access = null;
-      state.refresh = null;
       state.isAuthenticated = false;
       state.user = null;
       state.error = false;
@@ -208,10 +183,6 @@ export const authSlice = createSlice({
         "User registered successfully. Check your email to activate your account";
     },
     startRegisteringFail: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-      }
-
       state.registering = false;
       state.registeringSuccess = false;
       state.messages = "Registration failed";
@@ -272,13 +243,6 @@ export const authSlice = createSlice({
       state.isActivated = true;
     },
     logOut: (state) => {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-      }
-
-      state.access = null;
-      state.refresh = null;
       state.isAuthenticated = false;
       state.user = null;
       state.error = false;
@@ -305,10 +269,12 @@ export const authSlice = createSlice({
     },
     loadUserSuccess: (state, { payload }) => {
       state.user = payload;
+      state.isActivated = true;
     },
     loadUserFail: (state) => {
       state.error = true;
       state.user = null;
+      state.isActivated = false;
     },
 
     doneCheckAuthenticated: (state, action) => {

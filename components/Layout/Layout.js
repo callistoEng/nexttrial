@@ -13,15 +13,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({ children }) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadUsers());
-    
+    if (dispatch && dispatch !== null && dispatch !== undefined) {
+      dispatch(checkAuthenticated());
+    }
   }, [dispatch]);
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log('auth is', isAuthenticated) 
-  console.log('user is', user)
   return (
     <>
       <Header />

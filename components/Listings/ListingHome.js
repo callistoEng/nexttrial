@@ -2,11 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { GoFlame, GoRequestChanges } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
-// import { useNavigate } from "react-router-dom";
 import { Fragment, useState } from "react";
-// import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
-// import 'react-phone-number-input/style.css'
-// import PhoneInput from 'react-phone-number-input'
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineScreenSearchDesktop } from "react-icons/md";
 import { TiNews } from "react-icons/ti";
@@ -72,16 +68,6 @@ const ListingHome = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // TrackpageView("/")
-  // return () => {
-  // dispatch(failedGetingCoWorkingListing());
-  // dispatch(failedGetingLandListing());
-  // dispatch(failedGetingResidentialListing());
-  // dispatch(failedGetingCommercialHomeListing());
-  //   };
-  // }, [dispatch]);
 
   const [searchQuery, setSearchQuery] = useState("");
 

@@ -18,15 +18,15 @@ const UserLogin = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loginerror = useSelector((state) => state.auth.loginerror);
   const dispatch = useDispatch();
+  console.log('is ayhs',  isAuthenticated) 
   useEffect(() => {
     window.scrollTo(0, 0);
     emailFocus.current.focus();
-    dispatch(loadUsers());
     // if (isAuthenticated) {
     //   router.push("/");
     // }
     // TrackpageView("/auth/login")
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated]);
   // useEffect(async () => {
   // await fetch("/api/auth/loaduser", {
   //   method: "GET",

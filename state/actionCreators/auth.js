@@ -58,38 +58,30 @@ import {
   failedGettingAllUsers,
 } from "../estateSlices/authSlices";
 
-export const getNewAccessToken = async () => {
-  const refreshToken = localStorage.getItem("refresh");
-  const body = JSON.stringify({ refresh: refreshToken });
-  const newAccessToken = await ApiFree().post(`/auth/jwt/refresh/`, body);
-  gotNewRefresh(newAccessToken);
-  return newAccessToken;
-};
+// export const getNewAccessToken = async () => {
+//   const refreshToken = localStorage.getItem("refresh");
+//   const body = JSON.stringify({ refresh: refreshToken });
+//   const newAccessToken = await ApiFree().post(`/auth/jwt/refresh/`, body);
+//   gotNewRefresh(newAccessToken);
+//   return newAccessToken;
+// };
 
 export const checkAuthenticated = () => async (dispatch) => {
-  if (localStorage.getItem("access")) {
-    const config = {
+  try {
+    const res = await fetch(`/api/auth/verify/`, {
+      method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
       },
-    };
-    const body = JSON.stringify({ token: localStorage.getItem("access") });
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/jwt/verify/`,
-        body,
-        config
-      );
-      if (res.statusText === "OK") {
-        dispatch(authencticatingSuccess());
-        dispatch(loadUsers());
-      } else {
-        dispatch(authenticatingFail());
-      }
-    } catch (err) {
+    });
+    if (res.statusText === "OK") {
+      dispatch(authencticatingSuccess());
+      dispatch(loadUsers());
+    } else {
       dispatch(authenticatingFail());
     }
+  } catch (err) {
+    dispatch(authenticatingFail());
   }
 };
 
@@ -111,16 +103,6 @@ export const loadUsers = () => async (dispatch) => {
     dispatch(loadUserFail());
   }
 };
-// export const loadUsers = () => async (dispatch) => {
-//   try {
-//     const res = await ECAuthApiRoot().get("/auth/users/me/");
-//     dispatch(loadUserSuccess(res.data));
-//     console.log('load suc', res.data)
-//   } catch {
-//     dispatch(loadUserFail());
-//     console.log('load faile')
-//   }
-// };
 
 export const getAllRegularUsers = () => async (dispatch) => {
   try {
@@ -144,17 +126,14 @@ export const login = (email, password) => async (dispatch) => {
       },
       body,
     });
-    const resJson = await res.json()  
-    console.log("res next auth", res);
-    console.log("res json", resJson.data);
-    if(res.status===200){
-      dispatch(startSigningInSucess(resJson.data));
-      dispatch(loadUsers());
+    const resJson = await res.json();
+    // console.log("auth", res);
+    // console.log("res json", resJson.data);
+    if (res.status === 200) {
+      dispatch(startSigningInSucess());
     }
-    console.log("in suc");
   } catch (err) {
     dispatch(startSigningInFail());
-    console.log("in fail ", err);
   }
 };
 
