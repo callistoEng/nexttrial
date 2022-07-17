@@ -434,6 +434,7 @@ const Header = () => {
             <FaUser className="text-xl text-white" />
           </div>
         </nav>
+
       </header>
     </>
   );

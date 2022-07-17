@@ -13,16 +13,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { IoListSharp } from "react-icons/io5";
 import { GrMap } from "react-icons/gr";
 import { BsShareFill } from "react-icons/bs";
-// import {
-//   FacebookIcon,
-//   FacebookShareButton,
-//   TwitterIcon,
-//   TelegramIcon,
-//   TelegramShareButton,
-//   TwitterShareButton,
-//   WhatsappIcon,
-//   WhatsappShareButton,
-// } from "react-share";
 import commercialMarker from "../images/Commercial.svg";
 import houseMarker from "../images/house1.svg";
 import landMarker from "../images/Land.svg";
@@ -43,6 +33,7 @@ import {
 } from "./ListingPagination";
 import { RiMenuFoldLine } from "react-icons/ri";
 import { useRouter } from "next/router";
+import { InteractProperties } from "./Interact";
 // import { TrackpageView } from "../GAnalytics";
 
 const Search = () => {
@@ -418,63 +409,7 @@ const Search = () => {
                 residentialListings.flatMap((listing, index) => {
                   return (
                     <div className="pt-3 pl-0 overflow-hidden" key={index}>
-                      <div className="h-52 rounded-t-xl overflow-hidden relative">
-                        <Link
-                          href={`/listings/more-info/${listing.properties.slug}`}
-                        >
-                          <img
-                            src={listing.properties.Images[0]?.images}
-                            alt={listing.properties.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </Link>
-                        <div className="flex justify-between items-center content-center">
-                          <div className="absolute top-3 left-3 text-white dark:text-black flex justify-between items-center content-center">
-                            <div className=" bg-cloud-theme-red py-1.5 px-3 rounded-md mr-1.5">
-                              <p className="font-bold">
-                                <GoFlame className="text-xs dark:text-black" />
-                              </p>
-                            </div>
-                            <div className="bg-white py-1 px-2 rounded-md dark:bg-cloud-theme-dark">
-                              {listing.properties.category?.category_name ===
-                              "For Sale" ? (
-                                <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                  SALE
-                                </p>
-                              ) : (
-                                <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                  TO LET
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="absolute top-3 right-2 text-white flex justify-between items-center content-center">
-                            <div className="text-white  rounded-md mr-1.5">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  dispatch(
-                                    likeListings(listing.properties.slug)
-                                  )
-                                }
-                                className="bg-transparent dark:bg-cloud-theme-dark ring-cloud-theme-blue ring-1 flex justify-center rounded-full w-6 h-6 mr-4"
-                              >
-                                <AiOutlineHeart className="mt-1 text-base text-white" />
-                              </button>
-                            </div>
-                            <div>
-                              <div className="rounded-md group">
-                                <button
-                                  type="button"
-                                  className="bg-transparent ring-cloud-theme-blue ring-1 flex justify-center items-center content-center rounded-full w-8 h-8 mr-1"
-                                >
-                                  <BsShareFill className="mt-0 md:text-lg text-sm text-white" />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <InteractProperties listing={listing} dispatch={dispatch} likeListings={likeListings}/> 
                       <Link
                         href={`/listings/more-info/${listing.properties.slug}`}
                       >
@@ -565,63 +500,7 @@ const Search = () => {
                 commercialListings.flatMap((listing, index) => {
                   return (
                     <div className="pt-3 pl-0 overflow-hidden" key={index}>
-                      <div className="h-52 rounded-t-xl overflow-hidden relative">
-                        <Link
-                          href={`/listings/more-info/${listing.properties.slug}`}
-                        >
-                          <img
-                            src={listing.properties.Images[0]?.images}
-                            alt={listing.properties.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </Link>
-                        <div className="flex justify-between items-center content-center">
-                          <div className="absolute top-3 left-3 text-white dark:text-black flex justify-between items-center content-center">
-                            <div className=" bg-cloud-theme-red py-1.5 px-3 rounded-md mr-1.5">
-                              <p className="font-bold">
-                                <GoFlame className="text-xs dark:text-black" />
-                              </p>
-                            </div>
-                            <div className="bg-white py-1 px-2 rounded-md dark:bg-cloud-theme-dark">
-                              {listing.properties.category?.category_name ===
-                              "For Sale" ? (
-                                <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                  SALE
-                                </p>
-                              ) : (
-                                <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                  TO LET
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="absolute top-3 right-2 text-white flex justify-between items-center content-center">
-                            <div className="text-white  rounded-md mr-1.5">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  dispatch(
-                                    likeListings(listing.properties.slug)
-                                  )
-                                }
-                                className="bg-transparent dark:bg-cloud-theme-dark ring-cloud-theme-blue ring-1 flex justify-center rounded-full w-6 h-6 mr-4"
-                              >
-                                <AiOutlineHeart className="mt-1 text-base text-white" />
-                              </button>
-                            </div>
-                            <div>
-                              <div className="rounded-md group">
-                                <button
-                                  type="button"
-                                  className="bg-transparent ring-cloud-theme-blue ring-1 flex justify-center items-center content-center rounded-full w-8 h-8 mr-1"
-                                >
-                                  <BsShareFill className="mt-0 md:text-lg text-sm text-white" />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <InteractProperties listing={listing} dispatch={dispatch} likeListings={likeListings}/> 
                       <Link
                         href={`/listings/more-info/${listing.properties.slug}`}
                       >
@@ -705,66 +584,12 @@ const Search = () => {
                   No items found. Filter more
                 </p>
               </div>
-            ) : (
-              landListings &&
+            ) : ( 
+              landListings && 
               landListings.flatMap((listing, index) => {
                 return (
                   <div className="pt-3 pl-0 overflow-hidden" key={index}>
-                    <div className="h-52 rounded-t-xl overflow-hidden relative">
-                      <Link
-                        href={`/listings/more-info/${listing.properties.slug}`}
-                      >
-                        <img
-                          src={listing.properties.Images[0]?.images}
-                          alt={listing.properties.title}
-                          className="w-full h-full  object-cover"
-                        />
-                      </Link>
-                      <div className="flex justify-between items-center content-center">
-                        <div className="absolute top-3 left-3 text-white dark:text-black flex justify-between items-center content-center">
-                          <div className=" bg-cloud-theme-red py-2 px-4 rounded-md mr-1.5">
-                            <p className="font-bold">
-                              <GoFlame className="text-xs dark:text-black" />
-                            </p>
-                          </div>
-                          <div className="bg-white py-1.5 px-2.5 rounded-md dark:bg-cloud-theme-dark">
-                            {listing.properties.category?.category_name ===
-                            "For Sale" ? (
-                              <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                SALE
-                              </p>
-                            ) : (
-                              <p className="font-semibold text-xs text-cloud-theme-blue ">
-                                TO LET
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                        <div className="absolute top-3 right-2 text-white flex justify-between items-center content-center">
-                          <div className="text-white  rounded-md mr-1.5">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                dispatch(likeListings(listing.properties.slug))
-                              }
-                              className="bg-transparent dark:bg-cloud-theme-dark ring-cloud-theme-blue ring-1 flex justify-center rounded-full w-6 h-6 mr-4"
-                            >
-                              <AiOutlineHeart className="mt-1 text-base text-white" />
-                            </button>
-                          </div>
-                          <div>
-                            <div className="rounded-md group">
-                              <button
-                                type="button"
-                                className="bg-transparent ring-cloud-theme-blue ring-1 flex justify-center items-center content-center rounded-full w-8 h-8 mr-1"
-                              >
-                                <BsShareFill className="mt-0 md:text-lg text-sm text-white" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <InteractProperties listing={listing} dispatch={dispatch} likeListings={likeListings}/> 
                     <Link
                       href={`/listings/more-info/${listing.properties.slug}`}
                     >

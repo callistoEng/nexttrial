@@ -295,7 +295,6 @@ const ListingHome = () => {
                       <div className="p-2 pt-2 md:h-32 h-28 text-sm md:text-base rounded-lg dark:shadow-darkShadow shadow-lg z-10 opacity-100 bg-white dark:bg-cloud-theme-dark dark:text-white relative -top-6">
                         <Link href={`/listings/more-info/${listing.slug}`}>
                           <a>
-                            {" "}
                             <p className=" text-opacity-0 mb-1">
                               {winCardWidth >= 768
                                 ? truncateWords(listing.title, 48)
@@ -338,12 +337,11 @@ const ListingHome = () => {
                                   15
                                 )}
                               </p>
-                              {listing.property_size && (
-                                <p className="text-blue-500 ">
-                                  {NumberFormat(listing.property_size)}ft
-                                  <sup>2</sup>
-                                </p>
-                              )}
+                              {parseFloat(listing.property_size) > 0.0 && (
+                              <p className="text-blue-500 ">
+                                {NumberFormatAcres(listing.property_size)}<span className="text-xs">(acres)</span>
+                              </p>
+                            )}
                             </div>
                           </a>
                         </Link>
@@ -403,13 +401,13 @@ const ListingHome = () => {
         homeListing={commercialHomeListings}
         winCardWidth={winCardWidth}
       />
-      <HomeWidgets
+      {/* <HomeWidgets
         likeListings={likeListings}
         dispatch={dispatch}
         title="CO-WORKING"
         homeListing={coWorkingHomeListings}
         winCardWidth={winCardWidth}
-      />
+      /> */}
       
       {/* <section className="px-5 mb-3">
         <div className="px-0 flex items-center justify-between w-full">

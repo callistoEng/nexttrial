@@ -58,7 +58,7 @@ function Footer() {
   };
   return (
     <section className="pt-5 mt-0 bg-cloud-theme-bg text-white">
-      <div className="grid grid-cols-1 md:grid-cols-3 px-6 xs-l:px-10 md:px-16 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 px-3 gap-5">
         <div className="flex col-span-2 gap-3 p-4 w-full">
           <div className="">
             <h4 className="font-medium text-xl">CONTACT</h4>

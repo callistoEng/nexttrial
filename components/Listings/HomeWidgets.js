@@ -99,10 +99,9 @@ const HomeWidgets = ({ title, homeListing,likeListings, winCardWidth, dispatch }
                               <IoLocationSharp className="mt-[0.188rem] text-sm" />
                               {truncateWords(listing.location_description, 15)}
                             </p>
-                            {listing.property_size && (
+                            {parseFloat(listing.property_size) > 0.0 && (
                               <p className="text-blue-500 ">
-                                {NumberFormat(listing.property_size)}ft
-                                <sup>2</sup>
+                                {NumberFormatAcres(listing.property_size)}<span className="text-xs">(acres)</span>
                               </p>
                             )}
                           </div>

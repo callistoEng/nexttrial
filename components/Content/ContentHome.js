@@ -164,8 +164,8 @@ const ContentHome = () => {
                 pagination={{ clickable: true }}
                 modules={[Pagination, Autoplay, EffectCreative]}
               >
-                {randomPosts.flatMap((item, index) => (
-                  <SwiperSlide className="w-full h-full" key={item.id}>
+                {randomPosts.flatMap((item) => (
+                  <SwiperSlide className="w-full h-full" key={item.slug}>
                     <div className="w-full sm:h-[52vh] h-[35vh] rounded-md">
                       <Link href={`/news/more/${item.slug}`}>
                         <img
@@ -210,7 +210,7 @@ const ContentHome = () => {
           <div className="col-span-3 rounded-md sm:h-[52vh] h-[35vh] grid grid-cols-2 gap-3 ">
             {randomPosts?.length > 0 
               ? randomPosts.slice(0, 2).flatMap((item) => (
-                  <article key={item.id} className="rounded-md h-full bg-blue-900 overflow-hidden relative shadow-lg">
+                  <article key={item.slug} className="rounded-md h-full bg-blue-900 overflow-hidden relative shadow-lg">
                     <Link href={`/news/more/${item.slug}`}>
                       <img
                         src={item.thumbnail && item.thumbnail}
@@ -255,31 +255,6 @@ const ContentHome = () => {
                     </div>
                   </div>
                 ))}
-            {/* <div className="w-full h-full rounded-md">
-                      <Link href={`/news/more/${item.slug}`}>
-                        <img
-                          src={item.thumbnail && item.thumbnail}
-                          alt={item.title}
-                          className="w-full h-full group-hover:scale-125 ease-in rounded-md duration-300 object-cover"
-                        />
-                      </Link>
-                      <div className="absolute top-0 mt-40 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-blue-900"></div>
-                      <div className="absolute bottom-0 p-5 mb-5 text-white">
-                        <div className="flex justify-start items-center content-center mb-2 text-xs">
-                          <span className="px-2 py-0.5 bg-black text-sm mr-2">
-                            {item.Location}
-                          </span>
-                        </div>
-                        <div>
-                          <Link
-                            href={`/news/more/${item.slug}`}
-                            className="font-semibold leading-tight sm:leading-snug sm:text-lg text-sm hover:underline"
-                          >
-                            {item.title}
-                          </Link>
-                        </div>
-                      </div>
-                    </div> */}
           </div>
         </div>
         <section className="mt-7 ">
@@ -540,16 +515,18 @@ const ContentHome = () => {
             <div className="flex flex-col md:flex-row content-center items-center">
               <Link
                 href="/auth/signup"
-                className="py-4 px-16 text-white bg-cloud-theme-gold text-sm md:text-base font-bold rounded-lg mr-3 md:mr-5"
+                
               >
-                JOIN US!
+                <a className="py-4 px-16 text-white bg-cloud-theme-gold text-sm md:text-base font-bold rounded-lg mr-3 md:mr-5"> JOIN US!</a>
+               
               </Link>
               <p className="mr-5">or</p>
               <Link
                 href="/auth/login"
-                className="mr-5 underline text-sm md:text-base  text-cloud-theme-gold font-bold"
+                
               >
-                SIGN IN
+                <a className="mr-5 underline text-sm md:text-base  text-cloud-theme-gold font-bold">SIGN IN</a>
+                
               </Link>
             </div>
           </section>
@@ -564,7 +541,7 @@ const ContentHome = () => {
             {popularPosts
               ? popularPosts.length > 0
                 ? popularPosts.map((item) => (
-                    <SwiperSlide key={item.id}>
+                    <SwiperSlide key={item.slug}>
                       <Link href={`/news/more/${item.slug}`}>
                         <a>
                           <div className="h-64 rounded-t-xl overflow-hidden relative">
@@ -697,7 +674,7 @@ const ContentHome = () => {
               ? featuredPosts.length > 0
                 ? featuredPosts.map((item) => {
                     return (
-                      <SwiperSlide key={item.id}>
+                      <SwiperSlide key={item.slug}>
                         <Link href={`/news/more/${item.slug}`}>
                           <a>
                           <div className="h-64 rounded-t-xl overflow-hidden relative">
@@ -819,7 +796,7 @@ const ContentHome = () => {
                     </div>
                   </SwiperSlide>
                 ))}
-          </Swiper>
+          </Swiper> 
         </section>
         <section className="mt-7">
           <div className="flex justify-start content-center items-center">
