@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { truncateWords } from "../../utils/Truncate";
 import {
-  getMyPosts,
+  myPersonalPosts,
   deleteMyPosts,
-  getMyPostsNoThumbs,
+  myPersonalPostsNoThumbs,
 } from "../../state/actionCreators/content";
 import { failedGettingMyPosts } from "../../state/estateSlices/contentSlice";
-import { loadUsers } from "../../state/actionCreators/auth";
 import Moment from "react-moment";
 import MyPostPagination from "./MyPostPagination";
 import { FaSearch } from "react-icons/fa";
@@ -33,19 +32,18 @@ const MyPosts = () => {
   const dispatch = useDispatch();
   const onSearchContent = (e) => {
     e.preventDefault();
-    dispatch(getMyPosts(currentPage, query));
-    TrackpageView("/auth/agent/my-posts");
+    dispatch(myPosts(currentPage, query));
+    // TrackpageView("/auth/agent/my-posts");
   };
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-    }
-    dispatch(getMyPosts(currentPage, query));
-    dispatch(getMyPostsNoThumbs(currentNoImgPage));
+    window.scrollTo(0, 0);
+
+    dispatch(myPersonalPosts(currentPage, query));
+    dispatch(myPersonalPostsNoThumbs(currentNoImgPage));
     return () => {
-      dispatch(failedGettingMyPosts());
+      // dispatch(failedGettingMyPosts());
     };
-  }, [dispatch, query, currentPage, currentNoImgPage]);
+  }, [dispatch, currentPage, query, currentNoImgPage]);
   if (!user) {
     return (
       <div className="mt-[6rem] h-screen w-full">

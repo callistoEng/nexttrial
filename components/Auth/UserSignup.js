@@ -665,7 +665,7 @@ const UserSignup = () => {
             </div>
           </div>
         </div>
-        <Link href="/auth/login">
+        <Link href="/auth/agent/login">
           <a className="text-blue-600 underline">Already signed up? Login</a>
         </Link>
 

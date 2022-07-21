@@ -10,8 +10,7 @@ export default async (req, res) => {
     });
     try { 
       const auth_res = await ApiFree().post("/api/auth/jwt/create/", body);        
-      if (auth_res.status === 200) {
-        console.log('found 200',auth_res.data)
+      if (auth_res.status === 200) { 
         res.setHeader("Set-Cookie", [
           cookie.serialize("access", auth_res.data.access, {
             httpOnly: true,

@@ -79,9 +79,7 @@ export const getContentDetail = (slug) => async (dispatch) => {
 export const getContentList = (query) => async (dispatch) => {
   dispatch(startContentList());
   try {
-    const res = await ApiFree().get(
-      "/api/v2/contents/"+query
-    );
+    const res = await ApiFree().get("/api/v2/contents/" + query);
     dispatch(doneContentList(res.data));
   } catch (error) {
     dispatch(failedContentList());
@@ -95,7 +93,6 @@ export const getContentByCategory = (slug) => async (dispatch) => {
       `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/contents/category/${slug}/`
     );
     dispatch(doneContentByCategory(res.data));
-    
   } catch (error) {
     dispatch(failedContentByCategory());
   }
@@ -132,23 +129,7 @@ export const getRandomPosts = () => async (dispatch) => {
     dispatch(failedGettingRandomPosts());
   }
 };
-export const getMyPostsNextNoThumbPrevPage = (myPostNext) => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
-  dispatch(startGettingMyPostsNoThumbs());
-  try {
-    const res = await axios.get(
-      myPostNext,
-      config
-    );
-    dispatch(doneGettingMyPostsNoThumbs(res.data));
-  } catch (error) {
-    dispatch(failedGettingMyPostsNoThumbs());
-  }
-};
+
 export const scheduleViewing = (formData) => async (dispatch) => {
   const config = {
     headers: {
@@ -172,9 +153,7 @@ export const scheduleViewing = (formData) => async (dispatch) => {
 export const getAllPostsNextPrevPage = (postNextPrev) => async (dispatch) => {
   dispatch(startContentList());
   try {
-    const res = await ApiFree().get(
-      postNextPrev
-    );
+    const res = await ApiFree().get(postNextPrev);
     dispatch(doneContentList(res.data));
   } catch (error) {
     dispatch(failedContentList());
@@ -203,37 +182,46 @@ export const getFeaturedPosts = () => async (dispatch) => {
     dispatch(failedGettingFeatured());
   }
 };
-export const getMyPostsNoThumbs = (currentPage) => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
+// export const getMyPostsNoThumbs = (currentPage) => async (dispatch) => {
+export const myPersonalPostsNoThumbs = (currentPage) => async (dispatch) => {
+  //mypostsnothumbs
+  const body = JSON.stringify({ currentPage });
   dispatch(startGettingMyPostsNoThumbs());
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_DJANGO_SEMIBASE_URL}/api/v2/contents/no-thumbs/?page=${currentPage}`,
-      config
-    );
-    dispatch(doneGettingMyPostsNoThumbs(res.data));
+    const res = await fetch("/api/content/mypostsnothumbs", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingMyPostsNoThumbs(resJson.posts));
+    }
   } catch (error) {
     dispatch(failedGettingMyPostsNoThumbs());
   }
 };
-export const getMyPosts = (currentPage, query) => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
+// export const getMyPosts = (currentPage, query) => async (dispatch) => {
+export const myPersonalPosts = (currentPage, query) => async (dispatch) => {
   dispatch(startGettingMyPosts());
+  const body = JSON.stringify({ currentPage, query });
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/contents/my-posts/?page=${currentPage}&search=${query}`,
-      config
-    );
-    dispatch(doneGettingMyPosts(res.data));
-  } catch (error) {
+    const res = await fetch("/api/content/mypost", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingMyPosts(resJson.posts));
+    }
+  } catch (err) {
     dispatch(failedGettingMyPosts());
   }
 };
@@ -256,16 +244,49 @@ export const deleteMyPosts = (slug, currentPage, query) => async (dispatch) => {
     dispatch(failedDeletingMyPost());
   }
 };
-export const getMyPostsNextPrevPage = (myPostNext) => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
+export const getMyPostsNextNoThumbPrevPage =
+  (myPostNext) => async (dispatch) => {
+    const body = JSON.stringify({ myPostNext });
+    dispatch(startGettingMyPostsNoThumbs());
+    try {
+      // const res = await axios.get(myPostNext, config);
+      const res = await fetch("/api/content/mypostnextprevnothumb", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+      const resJson = await res.json();
+      if (res.status === 200) {
+        dispatch(doneGettingMyPostsNoThumbs(resJson.posts));
+      } else {
+        dispatch(failedGettingMyPostsNoThumbs());
+      }
+    } catch (error) {
+      dispatch(failedGettingMyPostsNoThumbs());
+    }
   };
+export const getMyPostsNextPrevPage = (myPostNext) => async (dispatch) => {
+  // mypostnextprev
+  const body = JSON.stringify({ myPostNext });
   dispatch(startGettingMyPosts());
   try {
-    const res = await axios.get(myPostNext, config);
-    dispatch(doneGettingMyPosts(res.data));
+    const res = await fetch("/api/content/mypostnextprev", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingMyPosts(resJson.posts));
+    } else {
+      dispatch(failedGettingMyPosts());
+    }
   } catch (error) {
     dispatch(failedGettingMyPosts());
   }

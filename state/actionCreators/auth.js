@@ -117,7 +117,6 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
   dispatch(startSigningIn());
   try {
-    // const res = await ApiFree().post("/auth/jwt/create/", body);
     const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: {

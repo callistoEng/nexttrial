@@ -14,7 +14,7 @@ export default async (req, res) => {
     if (access) {
       try {
         const user = await ApiFree().get(
-          `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/auth/users/me/`,
+          `/auth/users/me/`,
           config
         );
         if (user.status === 200) {

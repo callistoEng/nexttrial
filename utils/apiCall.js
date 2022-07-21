@@ -32,6 +32,14 @@ export const ApiFree = () => {
   });
   return axiosInstance;
 };
+export const ApiFreeNoBase = () => {
+  const axiosInstance = axios.create({
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  return axiosInstance;
+};
 
 
 

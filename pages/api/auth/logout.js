@@ -2,7 +2,6 @@ import cookie from "cookie";
 import { ApiFree } from "../../../utils/apiCall";
 
 export default async (req, res) => {
-  console.log("call logout");
   if (req.method === "POST") {
     res.setHeader("Set-Cookie", [
       cookie.serialize("access", "", {
