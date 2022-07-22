@@ -86,21 +86,25 @@ export const reportListing = (slug, complaint) => async (dispatch) => {
   }
 };
 export const getScheduledViewing = () => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startReportingListing());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/listings/scheduled/`,
-      config
-    );
-    dispatch(doneGettingScheduledViewings(res.data));
-  } catch (error) {
+    const res = await fetch("/api/auth/agent/sheduledviewings", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingScheduledViewings(resJson.data));
+    } else {
+      dispatch(failedReportingListing());
+    }
+    
+  } catch (err) {
     dispatch(failedReportingListing());
   }
+
 };
 export const getCommercialListings = () => async (dispatch) => {
   dispatch(startGetingCommercialListing());

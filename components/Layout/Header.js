@@ -168,7 +168,7 @@ const Header = () => {
                 {user && user.is_content_creator && (
                   <>
                     <li className="w-full bg-blue-100 rounded-md mb-2">
-                      <Link href="/auth/my-posts">
+                      <Link href="/auth/agent/my-posts">
                         <a
                           className="
                         px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold 
@@ -215,7 +215,7 @@ const Header = () => {
             ) : (
               <>
                 <li className="w-full bg-blue-100 rounded-md mb-2">
-                  <Link href="/auth/login">
+                  <Link href="/auth/agent/login">
                     <a
                       className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
                     hover:bg-cloud-theme-blue hover:text-white"
@@ -228,7 +228,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="w-full bg-blue-100 rounded-md mb-2">
-                  <Link href="/auth/signup">
+                  <Link href="/auth/agent/signup">
                     <a
                       className="px-3 py-3 w-full block dark:hover:bg-cloud-theme-blue font-semibold dark:hover:text-white 
                     hover:bg-cloud-theme-blue hover:text-white"

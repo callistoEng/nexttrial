@@ -106,8 +106,15 @@ export const loadUsers = () => async (dispatch) => {
 
 export const getAllRegularUsers = () => async (dispatch) => {
   try {
-    const res = await ECAuthApiRoot().get("/api/v2/users/all/");
-    dispatch(doneGettingAll(res.data));
+    // const res = await ECAuthApiRoot().get("/api/v2/users/all/");
+    const res = await fetch("/api/auth/agent/allregularusers", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    dispatch(doneGettingAll(resJson.users));
   } catch {
     dispatch(failedGettingAllUsers());
   }
@@ -681,18 +688,20 @@ export const userSubscribe = (email) => async (dispatch) => {
 };
 
 export const agentOverview = () => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startGettingOverview());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/users/overview/`,
-      config
-    );
-    dispatch(doneGettingOverview(res.data));
+    const res = await fetch("/api/auth/agent/overview", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingOverview(resJson.data));
+    } else {
+      dispatch(failedGettingOverview());
+    }
   } catch (err) {
     dispatch(failedGettingOverview());
   }
@@ -803,36 +812,45 @@ export const agentManageTodos =
   };
 
 export const agentMyListings = () => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startGettingMyListingsData());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/users/mylistings/`,
-      config
-    );
-    dispatch(doneGettingMyListingsData(res.data));
-  } catch (err) {
+    const res = await fetch("/api/auth/agent/mylistings", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingMyListingsData(resJson.listings));
+    } else {
+      dispatch(failedGettingMyListingsData());
+    }
+  } catch (error) {
     dispatch(failedGettingMyListingsData());
   }
 };
 
 export const agentAnalytics = () => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startGettingMyListingsAnalytics());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/users/analytics/`,
-      config
-    );
-    dispatch(doneGettingMyListingsAnalytics(res.data));
+    const res = await fetch("/api/auth/agent/analytics", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingMyListingsAnalytics(resJson.data));
+    } else {
+      dispatch(failedGettingMyListingsAnalytics());
+    }
+    // const res = await axios.get(
+    //   `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/users/analytics/`,
+    //   config
+    // );
+    // dispatch(doneGettingMyListingsAnalytics(res.data));
   } catch (err) {
     dispatch(failedGettingMyListingsAnalytics());
   }

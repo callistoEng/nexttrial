@@ -1,8 +1,8 @@
-import Link  from "next/link";
+import Link from "next/link";
 import { useEffect, useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import Chart from "chart.js/auto"; 
+import Chart from "chart.js/auto";
 import img from "../images/twi2.jpg";
 // import { TrackpageView } from "../GAnalytics";
 import { Doughnut } from "react-chartjs-2";
@@ -72,8 +72,11 @@ const DashBoard = () => {
   const myAnalytics = useSelector((state) => state.auth.myAnalytics);
   const user = useSelector((state) => state.auth.user);
   const allUsers = useSelector((state) => state.auth.allUsers);
-  const allSubscriberUsers = useSelector((state) => state.auth.allSubscriberUsers);
+  const allSubscriberUsers = useSelector(
+    (state) => state.auth.allSubscriberUsers
+  );
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(agentOverview());
@@ -121,7 +124,10 @@ const DashBoard = () => {
             Unauthorised! This page is for those who are registered as agents.
           </p>
           <p>
-            <Link className="underline text-cloud-theme-gold" href="/auth/login">
+            <Link
+              className="underline text-cloud-theme-gold"
+              href="/auth/login"
+            >
               Login
             </Link>{" "}
             first
@@ -140,7 +146,10 @@ const DashBoard = () => {
           <p>or</p>
           <p>
             If you haven't signed up{" "}
-            <Link className="underline text-cloud-theme-gold" href="/auth/signup">
+            <Link
+              className="underline text-cloud-theme-gold"
+              href="/auth/signup"
+            >
               Sign Up
             </Link>
           </p>
@@ -185,7 +194,10 @@ const DashBoard = () => {
                    bg-cloud-theme-blue mb-2 rounded-md shadow-md`}
             >
               <AiOutlineAppstoreAdd className="text-2xl mr-2" />
-              <Link href="/auth/agent/add-listings" className="w-full text-left">
+              <Link
+                href="/auth/agent/add-listings"
+                className="w-full text-left"
+              >
                 Add Listings
               </Link>
             </li>
@@ -228,7 +240,7 @@ const DashBoard = () => {
               >
                 My Tasks
               </button>
-            </li> 
+            </li>
 
             <li
               className={
@@ -556,8 +568,12 @@ const DashBoard = () => {
                                         <div className="h-24 w-2/6">
                                           <img
                                             className="h-full w-full object-cover"
-                                            src={listing.Images?.[0]?.images}
-                                            alt={listing.title.substring(0, 40)}
+                                            src={
+                                              `https://estatecloud.co.ke${listing.Images}`
+                                                ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                                : ""
+                                            }
+                                            alt={listing.title.substring(0, 50)}
                                           />
                                         </div>
                                         <div className="py-2 relative w-4/6">
@@ -584,13 +600,9 @@ const DashBoard = () => {
 
                                             <Link
                                               href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                Edit
                                               </a>
                                             </Link>
                                             <button
@@ -599,26 +611,18 @@ const DashBoard = () => {
                                                 setOpenDeleteModal(true);
                                                 setSlug(listing.slug);
                                               }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-
-                                              {listing.is_active
-                                                ? "Deactivate"
-                                                : "Activate"}
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                {listing.is_active
+                                                  ? "Deactivate"
+                                                  : "Activate"}
                                               </a>
                                             </button>
                                             <Link
                                               href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
-                                              View
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
+                                                View
                                               </a>
                                             </Link>
                                           </div>
@@ -641,7 +645,11 @@ const DashBoard = () => {
                                       <div className="h-24 w-2/6">
                                         <img
                                           className="h-full w-full object-cover"
-                                          src={listing.Images?.[0]?.images}
+                                          src={
+                                            `https://estatecloud.co.ke${listing.Images}`
+                                              ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                              : ""
+                                          }
                                           alt={listing.title.substring(0, 40)}
                                         />
                                       </div>
@@ -657,56 +665,44 @@ const DashBoard = () => {
                                           )}
                                         </p>
                                         <div className="absolute flex bottom-2 right-4">
-                                            {listing.views && (
-                                              <button
-                                                type="button"
-                                                className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-                                                <AiOutlineEye className="text-lg text-black mr-1" />{" "}
-                                                {listing.views}
-                                              </button>
-                                            )}
-
-                                            <Link
-                                              href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
-                                              </a>
-                                            </Link>
+                                          {listing.views && (
                                             <button
                                               type="button"
-                                              onClick={() => {
-                                                setOpenDeleteModal(true);
-                                                setSlug(listing.slug);
-                                              }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
+                                              className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
+                                            >
+                                              <AiOutlineEye className="text-lg text-black mr-1" />{" "}
+                                              {listing.views}
+                                            </button>
+                                          )}
 
+                                          <Link
+                                            href={`/listings/edit/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                              Edit
+                                            </a>
+                                          </Link>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setOpenDeleteModal(true);
+                                              setSlug(listing.slug);
+                                            }}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
                                               {listing.is_active
                                                 ? "Deactivate"
                                                 : "Activate"}
-                                              </a>
-                                            </button>
-                                            <Link
-                                              href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
+                                            </a>
+                                          </button>
+                                          <Link
+                                            href={`/listings/more-info/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
                                               View
-                                              </a>
-                                            </Link>
-                                          </div>
+                                            </a>
+                                          </Link>
+                                        </div>
                                       </div>
                                     </div>
                                   )
@@ -814,7 +810,11 @@ const DashBoard = () => {
                                         <div className="h-24 w-2/6">
                                           <img
                                             className="h-full w-full object-cover"
-                                            src={listing.Images?.[0]?.images}
+                                            src={
+                                              `https://estatecloud.co.ke${listing.Images}`
+                                                ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                                : ""
+                                            }
                                             alt={listing.title.substring(0, 40)}
                                           />
                                         </div>
@@ -842,13 +842,9 @@ const DashBoard = () => {
 
                                             <Link
                                               href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                Edit
                                               </a>
                                             </Link>
                                             <button
@@ -857,26 +853,18 @@ const DashBoard = () => {
                                                 setOpenDeleteModal(true);
                                                 setSlug(listing.slug);
                                               }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-
-                                              {listing.is_active
-                                                ? "Deactivate"
-                                                : "Activate"}
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                {listing.is_active
+                                                  ? "Deactivate"
+                                                  : "Activate"}
                                               </a>
                                             </button>
                                             <Link
                                               href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
-                                              View
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
+                                                View
                                               </a>
                                             </Link>
                                           </div>
@@ -899,7 +887,11 @@ const DashBoard = () => {
                                       <div className="h-24 w-2/6">
                                         <img
                                           className="h-full w-full object-cover"
-                                          src={listing.Images?.[0]?.images}
+                                          src={
+                                            `https://estatecloud.co.ke${listing.Images}`
+                                              ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                              : ""
+                                          }
                                           alt={listing.title.substring(0, 40)}
                                         />
                                       </div>
@@ -915,56 +907,44 @@ const DashBoard = () => {
                                           )}
                                         </p>
                                         <div className="absolute flex bottom-2 right-4">
-                                            {listing.views && (
-                                              <button
-                                                type="button"
-                                                className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-                                                <AiOutlineEye className="text-lg text-black mr-1" />{" "}
-                                                {listing.views}
-                                              </button>
-                                            )}
-
-                                            <Link
-                                              href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
-                                              </a>
-                                            </Link>
+                                          {listing.views && (
                                             <button
                                               type="button"
-                                              onClick={() => {
-                                                setOpenDeleteModal(true);
-                                                setSlug(listing.slug);
-                                              }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
+                                              className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
+                                            >
+                                              <AiOutlineEye className="text-lg text-black mr-1" />{" "}
+                                              {listing.views}
+                                            </button>
+                                          )}
 
+                                          <Link
+                                            href={`/listings/edit/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                              Edit
+                                            </a>
+                                          </Link>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setOpenDeleteModal(true);
+                                              setSlug(listing.slug);
+                                            }}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
                                               {listing.is_active
                                                 ? "Deactivate"
                                                 : "Activate"}
-                                              </a>
-                                            </button>
-                                            <Link
-                                              href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
+                                            </a>
+                                          </button>
+                                          <Link
+                                            href={`/listings/more-info/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
                                               View
-                                              </a>
-                                            </Link>
-                                          </div>
+                                            </a>
+                                          </Link>
+                                        </div>
                                       </div>
                                     </div>
                                   )
@@ -1072,7 +1052,11 @@ const DashBoard = () => {
                                         <div className="h-24 w-2/6">
                                           <img
                                             className="h-full w-full object-cover"
-                                            src={listing.Images?.[0]?.images}
+                                            src={
+                                              `https://estatecloud.co.ke${listing.Images}`
+                                                ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                                : ""
+                                            }
                                             alt={listing.title.substring(0, 40)}
                                           />
                                         </div>
@@ -1100,13 +1084,9 @@ const DashBoard = () => {
 
                                             <Link
                                               href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                Edit
                                               </a>
                                             </Link>
                                             <button
@@ -1115,26 +1095,18 @@ const DashBoard = () => {
                                                 setOpenDeleteModal(true);
                                                 setSlug(listing.slug);
                                               }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-
-                                              {listing.is_active
-                                                ? "Deactivate"
-                                                : "Activate"}
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                                {listing.is_active
+                                                  ? "Deactivate"
+                                                  : "Activate"}
                                               </a>
                                             </button>
                                             <Link
                                               href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
-                                              View
+                                            >
+                                              <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
+                                                View
                                               </a>
                                             </Link>
                                           </div>
@@ -1157,7 +1129,11 @@ const DashBoard = () => {
                                       <div className="h-24 w-2/6">
                                         <img
                                           className="h-full w-full object-cover"
-                                          src={listing.Images?.[0]?.images}
+                                          src={
+                                            `https://estatecloud.co.ke${listing.Images}`
+                                              ? `https://estatecloud.co.ke${listing.Images[0]?.images}`
+                                              : ""
+                                          }
                                           alt={listing.title.substring(0, 40)}
                                         />
                                       </div>
@@ -1173,56 +1149,44 @@ const DashBoard = () => {
                                           )}
                                         </p>
                                         <div className="absolute flex bottom-2 right-4">
-                                            {listing.views && (
-                                              <button
-                                                type="button"
-                                                className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
-                                                <AiOutlineEye className="text-lg text-black mr-1" />{" "}
-                                                {listing.views}
-                                              </button>
-                                            )}
-
-                                            <Link
-                                              href={`/listings/edit/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              
-                                              >
-
-                                              Edit
-                                              </a>
-                                            </Link>
+                                          {listing.views && (
                                             <button
                                               type="button"
-                                              onClick={() => {
-                                                setOpenDeleteModal(true);
-                                                setSlug(listing.slug);
-                                              }}
-                                              >
-                                              <a
-                                              
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
-                                              >
+                                              className="text-xs flex items-center content-center shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2"
+                                            >
+                                              <AiOutlineEye className="text-lg text-black mr-1" />{" "}
+                                              {listing.views}
+                                            </button>
+                                          )}
 
+                                          <Link
+                                            href={`/listings/edit/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
+                                              Edit
+                                            </a>
+                                          </Link>
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setOpenDeleteModal(true);
+                                              setSlug(listing.slug);
+                                            }}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5 mr-2">
                                               {listing.is_active
                                                 ? "Deactivate"
                                                 : "Activate"}
-                                              </a>
-                                            </button>
-                                            <Link
-                                              href={`/listings/more-info/${listing.slug}`}
-                                              >
-                                              <a
-                                              className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5"
-                                              
-                                              >
-
+                                            </a>
+                                          </button>
+                                          <Link
+                                            href={`/listings/more-info/${listing.slug}`}
+                                          >
+                                            <a className="text-xs shadow-md hover:text-cloud-theme-blue bg-cloud-theme-gold text-white rounded-sm px-1 py-0.5">
                                               View
-                                              </a>
-                                            </Link>
-                                          </div>
+                                            </a>
+                                          </Link>
+                                        </div>
                                       </div>
                                     </div>
                                   )
@@ -1838,7 +1802,7 @@ const DashBoard = () => {
                                     {user.email}
                                   </td>
                                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    {showTime(user.created_at)} 
+                                    {showTime(user.created_at)}
                                   </td>
                                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                     {user.subscription_type}
