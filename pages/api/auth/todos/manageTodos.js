@@ -92,6 +92,6 @@ export default async (req, res) => {
       return res.status(401).json({ error: "Unauthorised!" });
     }
   } else {
-    return res.status(405).json({ error: `method not allowed` });
+    return res.status(405).json({ error: "method not allowed" });
   }
 };
