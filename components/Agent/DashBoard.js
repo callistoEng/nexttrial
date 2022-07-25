@@ -99,8 +99,21 @@ const DashBoard = () => {
       return;
     }
     setTaskGroupErr("");
-    formData.append("group_name", taskGroup);
+    formData.append("group_name", taskGroup);  
     dispatch(agentAddTodoGroup(formData));
+  };
+  const handleDeleteTask = (id, method, todoGrpName) => {
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("todoGrpName", todoGrpName); 
+    let todosGroup = todoGrpName
+    dispatch(
+      agentManageTodos(
+        formData,
+        method,
+        todosGroup
+      )
+    )
   };
 
   if (!isAuthenticated) {
@@ -553,7 +566,7 @@ const DashBoard = () => {
                               </label>
                             </div>
                           </div>
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {myListingsData ? (
                               residentialCategory === "For Sale" ? (
                                 myListingsData.residential_sale.length > 0 ? (
@@ -795,7 +808,7 @@ const DashBoard = () => {
                               </label>
                             </div>
                           </div>
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {myListingsData ? (
                               commercialCategory === "For Sale" ? (
                                 myListingsData.commercial_sale.length > 0 ? (
@@ -1037,7 +1050,7 @@ const DashBoard = () => {
                               </label>
                             </div>
                           </div>
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {myListingsData ? (
                               landCategory === "For Sale" ? (
                                 myListingsData.land_sale.length > 0 ? (
@@ -1308,7 +1321,7 @@ const DashBoard = () => {
                           Residential Properties
                         </h4>
                         <div className="w-full backdrop-filter backdrop-blur-lg bg-gray-900 bg-opacity-60 p-4 rounded-sm">
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {scheduleViewings ? (
                               scheduleViewings.residential?.length > 0 ? (
                                 scheduleViewings.residential.flatMap(
@@ -1367,7 +1380,7 @@ const DashBoard = () => {
                           Commercial Properties
                         </h4>
                         <div className="w-full backdrop-filter backdrop-blur-lg bg-gray-900 bg-opacity-60 p-4 rounded-sm">
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {scheduleViewings ? (
                               scheduleViewings.commercial?.length > 0 ? (
                                 scheduleViewings.commercial.flatMap(
@@ -1426,7 +1439,7 @@ const DashBoard = () => {
                           Land Properties
                         </h4>
                         <div className="w-full backdrop-filter backdrop-blur-lg bg-gray-900 bg-opacity-60 p-4 rounded-sm">
-                          <div className="w-full h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
+                          <div className="w-full max-h-[35rem] grid grid-cols-1 sm:grid-cols-2 gap-3 pb-5 overflow-y-scroll myScrollBarDash">
                             {scheduleViewings ? (
                               scheduleViewings.land?.length > 0 ? (
                                 scheduleViewings.land.flatMap(
@@ -1621,14 +1634,8 @@ const DashBoard = () => {
                                   )}
                                   <button
                                     type="button"
-                                    onClick={() =>
-                                      dispatch(
-                                        agentManageTodos(
-                                          todo.id,
-                                          "delete",
-                                          todosGroup.todo_group_name
-                                        )
-                                      )
+                                    onClick={() => handleDeleteTask(todo.id,
+                                      "delete",todosGroup.todo_group_name)
                                     }
                                     className="mr-2"
                                   >
@@ -1873,6 +1880,10 @@ const AddTasks = ({ dispatch, openAddTaskModal, setOpenAddTaskModal }) => {
     setTaskErr("");
     formData.append("task", task);
     formData.append("todo_group_name", taskGroupName);
+    const taskToAdd = {
+      taskGroupName,
+      task,
+    };
 
     dispatch(agentAddTodo(formData, taskGroupName));
     setOpenAddTaskModal(false);
@@ -2030,6 +2041,7 @@ const EditTask = ({
     formData.append("org_task", todo.task);
     formData.append("task", task);
     formData.append("is_completed", isCompleted);
+    formData.append("todoGrpName", todoGrpName); 
     dispatch(agentManageTodos(formData, "patch", todoGrpName));
     setTaskEdit(null);
     setOpenEditDeleteModal(false);

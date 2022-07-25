@@ -2,10 +2,11 @@ import cookie from "cookie";
 import { ApiFree } from "../../../../utils/apiCall";
 
 export default async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
+    const { groupName } = req.body;
     const cookies = cookie.parse(req.headers.cookie ?? null);
     const access = cookies.access ?? null;
-
+    console.log('name', groupName )
     const config = {
       headers: {
         Authorization: `JWT ${access}`,
@@ -13,8 +14,11 @@ export default async (req, res) => {
     };
     if (access) {
       try {
-        const data = await ApiFree().get("/api/v2/listings/scheduled/", config);
-
+        const data = await ApiFree().get(
+          `/api/v2/tasks/?group_name=${groupName}`,
+          config
+        );
+        console.log("gropups", data.data);
         return res.status(200).json({
           data: data.data,
         });
@@ -29,7 +33,7 @@ export default async (req, res) => {
       });
     }
   } else {
-    res.setHeader("Allow", ["GET"]);
+    res.setHeader("Allow", ["POST"]);
     return res.status(405).json({
       error: `method ${req.method} not allowed`,
     });

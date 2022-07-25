@@ -95,7 +95,6 @@ const UserPreferences = () => {
   const isSubmitingPreference = useSelector(
     (state) => state.auth.isSubmitingPreference
   );
-  console.log('todis', todos) 
   const registering = useSelector((state) => state.auth.registering);
   const deleting = useSelector((state) => state.auth.deleting);
   const loadingLiked = useSelector((state) => state.listings.loadingLiked);

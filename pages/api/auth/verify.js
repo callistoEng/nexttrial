@@ -21,9 +21,9 @@ export default async (req, res) => {
           });
         }
       } catch (error) {
-        return res.status(error.response.status).json({
-          error: error.response.data.code,
-          statusText: error.response.statusText,
+        return res.status(error.response?.status).json({
+          error: error.response?.data.code,
+          statusText: error.response?.statusText,
         });
       }
     } else {

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import cookie from "cookie";
 import { ECAuthApiRoot, ApiFree } from "../../utils/apiCall";
 import {
   activatingSucess,
@@ -708,101 +707,111 @@ export const agentOverview = () => async (dispatch) => {
 };
 
 export const agentGetTodos = (groupName) => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
+  const body = JSON.stringify({ groupName });
   dispatch(startGettingTodos());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/?group_name=${groupName}`,
-      config
-    );
-    dispatch(doneGettingTodos(res.data));
+    const res = await fetch("/api/auth/todos/gettodos", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingTodos(resJson.data));
+    } else {
+      dispatch(failedGettingTodoGroups());
+    }
   } catch (err) {
     dispatch(failedGettingTodoS());
   }
 };
 export const agentGetTodosGroup = () => async (dispatch) => {
-  const config = {
-    headers: {
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startGettingTodoGroups());
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/add-todo-group/`,
-      config
-    );
-    dispatch(doneGettingTodosGroups(res.data));
+    const res = await fetch("/api/auth/todos/todogroups", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneGettingTodosGroups(resJson.data));
+    } else {
+      dispatch(failedGettingTodoGroups());
+    }
   } catch (err) {
     dispatch(failedGettingTodoGroups());
   }
 };
 export const agentAddTodoGroup = (formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data",
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startAddingTodo());
   try {
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/add-todo-group/`,
-      formData,
-      config
-    );
-    dispatch(doneAddingTodo());
-    dispatch(agentGetTodosGroup());
+    const res = await axios({
+      url: "/api/auth/todos/addTodoGroup",
+      method: "POST",
+      data: formData,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneAddingTodo());
+      dispatch(agentGetTodosGroup());
+    } else {
+      dispatch(failedAddingTodo());
+    }
   } catch (err) {
     dispatch(failedAddingTodo());
   }
 };
 export const agentAddTodo = (formData, taskGroupName) => async (dispatch) => {
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data",
-      Authorization: `JWT ${localStorage.getItem("access")}`,
-    },
-  };
   dispatch(startAddingTodo());
   try {
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/`,
-      formData,
-      config
-    );
-    dispatch(doneAddingTodo());
-    dispatch(agentGetTodos(taskGroupName));
+    const res = await axios({
+      url: "/api/auth/todos/addTodo",
+      method: "POST",
+      data: formData,
+    });
+    const resJson = await res.json();
+    if (res.status === 200) {
+      dispatch(doneAddingTodo());
+      dispatch(agentGetTodos(taskGroupName));
+    } else {
+      dispatch(failedAddingTodo());
+    }
   } catch (err) {
     dispatch(failedAddingTodo());
   }
 };
 export const agentManageTodos =
-  (todoId, method, todosGroup) => async (dispatch) => {
-    const config = {
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("access")}`,
-      },
-    };
+  (formData, method, todosGroup) => async (dispatch) => {
+    // const body = { todoId,todosGroup};  
     dispatch(startAddingTodo());
     try {
       if (method === "patch") {
-        await axios.patch(
-          `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/?grp_name=${todosGroup}`,
-          todoId,
-          config
-        );
+        const res = await axios({
+          url: "/api/auth/todos/manageTodos",
+          method: "PATCH",
+          data: formData, 
+        });
+        // const res = await fetch("/api/auth/todos/manageTodos", {
+        //   method: "PATCH", 
+        //   headers: {
+        //     Accept: "application/json",
+        //     "Content-Type": "application/json",
+        //   },
+        //   body,
+        // });
         dispatch(doneEditingTodo());
         dispatch(agentGetTodos(todosGroup));
       } else if (method === "delete") {
-        await axios.delete(
-          `${process.env.NEXT_PUBLIC_DJANGO_SEMIBASE_URL}/api/v2/tasks/?task_id=${todoId}`,
-          config
-        );
+        const res = await axios({
+          url: "/api/auth/todos/manageTodos",
+          method: "DELETE",
+          data: formData,
+        });
         dispatch(doneEditingTodo());
         dispatch(agentGetTodos(todosGroup));
       } else toast.warn("unknown method");
